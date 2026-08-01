@@ -1,0 +1,124 @@
+.container {
+  width: 100%;
+  background: var(--color-code-ws-bg);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-code-ws);
+  overflow: hidden;
+}
+
+.title {
+  background: var(--color-code-ws-title-bg);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-code-ws-title-border);
+  font: var(--font-code-ws-title);
+  color: var(--color-code-ws-title-text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleButton {
+  background: var(--color-code-ws-togle-button-bg);
+  border: 1px solid var(--color-code-ws-togle-button-border);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font: var(--font-code-ws-togle-button);
+  color: var(--color-code-ws-togle-button-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.code {
+  display: block;
+  white-space: pre;
+  font: var(--font-code-ws-code);
+  flex: 1;
+  padding: 16px;
+  background: var(--color-code-ws-code-bg);
+  overflow-x: auto;
+  margin-right: 16px;
+}
+
+.code .control {
+  color: var(--color-code-ws-code-control);
+}
+
+.code .declaration {
+  color: var(--color-code-ws-code-declaration);
+}
+
+.code .tsKeyword {
+  color: var(--color-code-ws-code-tsKeyword);
+}
+
+.code .type {
+  color: var(--color-code-ws-code-type);
+}
+
+.code .classKeyword {
+  color: var(--color-code-ws-code-classKeyword);
+}
+
+.code .module {
+  color: var(--color-code-ws-code-module);
+}
+
+.code .method {
+  color: var(--color-code-ws-code-method);
+}
+
+.code .string {
+  color: var(--color-code-ws-code-string);
+}
+
+.code .number {
+  color: var(--color-code-ws-code-number);
+}
+
+.code .global {
+  color: var(--color-code-ws-code-global);
+}
+
+.code .comment {
+  color: var(--color-code-ws-code-comment);
+  font-style: italic;
+}
+
+.code .boolean {
+  color: var(--color-code-ws-code-boolean);
+}
+
+.code .tag {
+  color: var(--color-code-ws-code-tag);
+}
+
+.code
+  span:not(.control):not(.declaration):not(.tsKeyword):not(.type):not(
+    .classKeyword
+  ):not(.module):not(.method):not(.string):not(.number):not(.comment):not(
+    .global
+  ):not(.boolean):not(.tag) {
+  color: var(--color-code-ws-code-other);
+}
+
+@media (max-width: 768px) {
+  .title {
+    padding: 8px 10px;
+  }
+
+  .code {
+    padding: 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .code {
+    padding: 8px;
+    font-size: 11px;
+  }
+}

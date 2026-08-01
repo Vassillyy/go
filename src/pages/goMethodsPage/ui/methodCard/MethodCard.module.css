@@ -1,0 +1,172 @@
+.methodCard {
+  border: 2px solid var(--color-method-card-border);
+  border-radius: 8px;
+  padding: 6px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+
+.methodCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-method-card-hover);
+}
+
+.methodInfo {
+  flex-shrink: 0;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.methodHeader {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonArrow {
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.buttonArrow svg {
+  height: 100%;
+  width: 100%;
+  color: var(--color-method-card-button-arrow);
+}
+
+.methodName {
+  font: var(--font-method-card-name);
+  color: var(--color-method-card-name);
+}
+
+.methodSyntax {
+  width: fit-content;
+  background: var(--color-method-card-syntax-bg);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font: var(--font-method-card-syntax);
+  color: var(--color-method-card-syntax-text);
+  border-left: 3px solid var(--color-method-card-syntax-border);
+  box-shadow: var(--shadow-method-card-syntax);
+}
+
+.parametersBlock {
+  background: var(--color-method-card-parametrs-block-bg);
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid var(--color-method-card-parametrs-block-border);
+}
+
+.parametersTitle {
+  font: var(--font-method-card-parametrs-title);
+  color: var(--color-method-card-parametrs-title);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.parametersList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parameterItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--color-method-card-parametr-item-border);
+}
+
+.parameterItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.parameterName {
+  width: 100%;
+  font: var(--font-method-card-parametr-name);
+  color: var(--color-method-card-parametr-name-text);
+  background: var(--color-method-card-parametr-name-bg);
+  padding: 3px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.parameterDescription {
+  font: var(--font-method-card-parametr-description);
+  color: var(--color-method-card-parametr-description-text);
+  flex: 1;
+  padding: 4px 0;
+  white-space: pre-line;
+}
+
+.descriptionBlock {
+  margin-top: 8px;
+}
+
+.methodDescription {
+  color: var(--color-method-card-method-description-text);
+  font: var(--font-method-card-method-description);
+}
+
+.specLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-method-card-link-text);
+  text-decoration: none;
+  font: var(--font-method-card-link);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--color-method-card-link-border);
+  width: fit-content;
+  transition: all 0.2s;
+}
+
+.specLink:hover {
+  background: var(--color-method-card-link-bg-hover);
+  color: var(--color-method-card-link-text-hover);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-method-card-link);
+}
+
+@media (max-width: 768px) {
+  .methodCard {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .methodInfo {
+    width: 100%;
+    flex-shrink: 1;
+  }
+
+  .parameterItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .methodCard {
+    padding: 4px;
+  }
+
+  .methodSyntax {
+    word-break: break-all;
+  }
+}

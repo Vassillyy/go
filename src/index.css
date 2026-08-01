@@ -1,0 +1,267 @@
+:root {
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  --font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-code: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-700: 700;
+  --font-size-10: 10px;
+  --font-size-12: 12px;
+  --font-size-13: 13px;
+  --font-size-14: 14px;
+  --font-size-15: 15px;
+  --font-size-16: 16px;
+  --font-size-17: 17px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-22: 22px;
+  --font-size-24: 24px;
+  --font-size-30: 30px;
+
+  /* Sidebar */
+  --color-sidebar-nav-link-border: #d9f2d9;
+  --color-sidebar-nav-link-text: #1a5f1a;
+  --color-sidebar-nav-active-link-text: #ffffff;
+  --color-sidebar-nav-link-bg: #edf9ed;
+  --color-sidebar-nav-active-link-bg: #2ecc71;
+  --color-sidebar-nav-link-bg-hover: #e2f7e2;
+  --color-sidebar-bg: #f8fdf8;
+  --color-sidebar-border: #ddf4dd;
+  --color-sidebar-title-text: #1a5f1a;
+  --color-sidebar-button-toggle-text: #5a8d5a;
+  --color-sidebar-button-toggle-text-hover: #e6f7e6;
+  --color-sidebar-subtitle-text: #5a8d5a;
+  --color-sidebar-scroll: #c8e6c9 #f5fff7;
+  --font-sidebar-nav-link: var(--font-weight-500) var(--font-size-15)
+    var(--font-family);
+  --font-sidebar-title: var(--font-weight-700) var(--font-size-22)
+    var(--font-family);
+  --font-sidebar-subtitle: var(--font-weight-400) var(--font-size-13)
+    var(--font-family);
+  --shadow-sidebar-nav-link: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  /* Pills */
+  --color-pills-border: #e8f5e9;
+  --color-pills-border-hover: #a5d6a7;
+  --color-pills-bg: #ffffff;
+  --color-pills-bg-active: linear-gradient(135deg, #5bc47d, #4cb06c);
+  --color-pills-bg-active-hover: linear-gradient(135deg, #4cb06c, #3da15f);
+  --color-pills-text: #2e7d32;
+  --color-pills-text-hover: #1b5e20;
+  --color-pills-text-active: #ffffff;
+  --font-pills: var(--font-weight-600) var(--font-size-12) var(--font-family);
+  --shadow-pills-hover: 0 3px 8px rgba(76, 176, 108, 0.15);
+
+  /* PageContainer */
+  --color-page-container-bg: #f8fff9;
+  --color-page-container-text: #333;
+  --color-page-container-title-text: #2c3e50;
+  --color-page-container-scroll: #c8e6c9 #f5fff7;
+  --font-page-container-title: var(--font-weight-400) var(--font-size-30)
+    var(--font-family);
+  --shadow-page-container-content: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  /* Input */
+  --color-input-border: #a5d6a7;
+  --color-input-border-focus: #2e7d32;
+  --color-input-border-placeholder: #aaa;
+  --color-input-text: #333;
+  --color-input-button-clear-text: #f00;
+  --font-input: var(--font-weight-400) var(--font-size-14) var(--font-family);
+  --font-input-button-clear: var(--font-weight-400) var(--font-size-13)
+    var(--font-family);
+
+  /* CodeWS */
+  --color-code-ws-bg: #1e1e1e;
+  --color-code-ws-title-bg: #252526;
+  --color-code-ws-title-text: #d4d4d4;
+  --color-code-ws-title-border: #333;
+  --color-code-ws-togle-button-bg: #3c3c3c;
+  --color-code-ws-togle-button-border: #4a4a4a;
+  --color-code-ws-togle-button-text: #e0e0e0;
+  --color-code-ws-code-bg: #1e1e1e;
+  --color-code-ws-code-control: #569cd6;
+  --color-code-ws-code-declaration: #4fc1ff;
+  --color-code-ws-code-tsKeyword: #4ec9b0;
+  --color-code-ws-code-type: #4ce68a;
+  --color-code-ws-code-classKeyword: #ce9178;
+  --color-code-ws-code-module: #c586c0;
+  --color-code-ws-code-method: #dcdcaa;
+  --color-code-ws-code-string: #ce9178;
+  --color-code-ws-code-number: #b5cea8;
+  --color-code-ws-code-global: #ffa500;
+  --color-code-ws-code-comment: #6a9955;
+  --color-code-ws-code-boolean: #569cd6;
+  --color-code-ws-code-tag: #ff7b72;
+  --color-code-ws-code-other: #d4d4d4;
+  --font-code-ws-title: var(--font-weight-600) var(--font-size-13)
+    var(--font-family);
+  --font-code-ws-togle-button: var(--font-weight-500) var(--font-size-12)
+    var(--font-family);
+  --font-code-ws-code: var(--font-weight-400) var(--font-size-14) / 1.5
+    var(--font-family-code);
+  --shadow-code-ws: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* MainLayout */
+  --color-main-layout-bg: #ffffff;
+
+  /* TopicLayout */
+  --color-topic-layout-sidebar-bg: #f5f5f5;
+  --color-topic-layout-sidebar-border: #e0e0e0;
+  --color-topic-layout-sidebar-scroll: gray #f5fff7;
+  --color-topic-layout-title: #333;
+  --color-topic-layout-toggle-text: #666;
+  --color-topic-layout-toggle-text-hover: #333;
+  --color-topic-layout-toggle-bg-hover: #e0e0e0;
+  --color-topic-layout-nav-link-text: #555;
+  --color-topic-layout-nav-link-text-hover: #333;
+  --color-topic-layout-nav-link-bg-hover: #e8e8e8;
+  --font-topic-layout-title: var(--font-weight-600) var(--font-size-18)
+    var(--font-family);
+  --font-topic-layout-nav-link: var(--font-weight-400) var(--font-size-14)
+    var(--font-family);
+
+  /* GoContentPage */
+  --color-go-content-page-no-result-text: #808080;
+  --font-go-content-page-no-result: var(--font-weight-600) var(--font-size-18)
+    var(--font-family);
+
+  /* TopicCard */
+  --color-topic-card-bg: #f8fbf8;
+  --color-topic-card-border: #e8f5e9;
+  --color-topic-card-border-hover: #c8e6c9;
+  --color-topic-card-title: #2c3e50;
+  --font-topic-card: var(--font-weight-600) var(--font-size-15)
+    var(--font-family);
+  --shadow-topic-card-hover: 0 2px 8px rgba(76, 175, 80, 0.1);
+
+  /* GoMethodsPage */
+  --color-go-methods-page-title: #2c3e50;
+  --color-go-methods-page-title-border: #4dabf7;
+  --color-go-methods-page-no-result-text: #808080;
+  --font-go-methods-page: var(--font-weight-400) var(--font-size-24)
+    var(--font-family);
+  --font-go-methods-page-no-result: var(--font-weight-600) var(--font-size-18)
+    var(--font-family);
+
+  /* MethodCard */
+  --color-method-card-border: #e9ecef;
+  --color-method-card-button-arrow: #1864ab;
+  --color-method-card-name: #1864ab;
+  --color-method-card-syntax-bg: #f8f9fa;
+  --color-method-card-syntax-text: #e8590c;
+  --color-method-card-syntax-border: #4dabf7;
+  --color-method-card-parametrs-block-bg: #f8f9fa;
+  --color-method-card-parametrs-block-border: #dee2e6;
+  --color-method-card-parametrs-title: #495057;
+  --color-method-card-parametr-item-border: #e9ecef;
+  --color-method-card-parametr-name-text: #1864ab;
+  --color-method-card-parametr-name-bg: #e7f5ff;
+  --color-method-card-parametr-description-text: #495057;
+  --color-method-card-method-description-text: #495057;
+  --color-method-card-link-text: #4dabf7;
+  --color-method-card-link-border: #4dabf7;
+  --color-method-card-link-bg-hover: #e7f5ff;
+  --color-method-card-link-text-hover: #1971c2;
+  --shadow-method-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --font-method-card-name: var(--font-weight-600) var(--font-size-20)
+    var(--font-family);
+  --font-method-card-syntax: var(--font-weight-400) var(--font-size-16)
+    var(--font-family);
+  --font-method-card-parametrs-title: var(--font-weight-600) var(--font-size-12)
+    var(--font-family);
+  --font-method-card-parametr-name: var(--font-weight-600) var(--font-size-13)
+    var(--font-family-code);
+  --font-method-card-parametr-description: var(--font-weight-400)
+    var(--font-size-12) / 1.5 var(--font-family);
+  --font-method-card-method-description: var(--font-weight-400)
+    var(--font-size-14) / 1.6 var(--font-family);
+  --font-method-card-link: var(--font-weight-500) var(--font-size-10)
+    var(--font-family);
+  --shadow-method-card-syntax: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-method-card-link: 0 2px 4px rgba(77, 171, 247, 0.2);
+
+  /* ErrorList */
+  --color-error-list-bg: linear-gradient(135deg, #fff9f9 0%, #fff5f5 100%);
+  --color-error-list-border: #ffcccc;
+  --color-error-list-border-left: #ff6b6b;
+  --color-error-list-header-border: #ffcccc;
+  --color-error-list-header-text: #d63939;
+  --color-error-list-error-text: #a61e1e;
+  --color-error-list-error-border: #ffe6e6;
+  --font-error-list-header: var(--font-weight-600) var(--font-size-13)
+    var(--font-family);
+  --font-error-list-error: var(--font-weight-400) var(--font-size-13) / 1.6
+    var(--font-family);
+  --shadow-error-list: var(0 2px 4px rgba(255, 107, 107, 0.1));
+
+  /* GoTopicPage */
+  --color-go-topic-page-back-button: #3b82f6;
+  --color-go-topic-page-back-button-hover: #1d4ed8;
+  --color-go-topic-page-title: #808080;
+  --color-go-topic-page-introduction: #333;
+  --color-go-topic-page-introduction-border: #eee;
+  --color-go-topic-page-scroll: #c8e6c9 #f5fff7;
+  --font-go-topic-page-back-button: var(--font-weight-400) var(--font-size-16)
+    var(--font-family);
+  --font-go-topic-page-title: var(--font-weight-500) var(--font-size-24)
+    var(--font-family);
+  --font-go-topic-page-introduction: var(--font-weight-400)
+    var(--font-size-18) / 1.2 var(--font-family);
+
+  /* SectionItem */
+  --color-section-item-border: #d3d3d3;
+  --color-section-item-title: #333;
+  --color-section-item-content: #444;
+  --color-section-item-addition-bg: #e9ecef;
+  --color-section-item-addition-text: #495057;
+  --color-section-item-addition-border: #ced4da;
+  --color-section-item-button-arrow: #191970;
+  --font-section-item-title: var(--font-weight-500) var(--font-size-20)
+    var(--font-family);
+  --font-section-item-content: var(--font-weight-400) var(--font-size-16) / 1.6
+    var(--font-family);
+  --font-section-item-addition: var(--font-weight-400) var(--font-size-15) / 1.6
+    var(--font-family);
+
+}
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-30: 22px;
+    --font-size-24: 18px;
+    --font-size-22: 18px;
+    --font-size-20: 16px;
+    --font-size-18: 15px;
+    --font-size-17: 14px;
+    --font-size-16: 13px;
+    --font-size-15: 13px;
+    --font-size-14: 12px;
+    --font-size-13: 11px;
+    --font-size-12: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-30: 20px;
+    --font-size-24: 17px;
+    --font-size-22: 16px;
+    --font-size-20: 15px;
+    --font-size-18: 14px;
+    --font-size-17: 13px;
+    --font-size-16: 12px;
+    --font-size-15: 12px;
+    --font-size-14: 11px;
+    --font-size-13: 10px;
+    --font-size-12: 9px;
+  }
+}

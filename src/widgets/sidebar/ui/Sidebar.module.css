@@ -1,0 +1,113 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: var(--color-sidebar-bg);
+  padding: 15px;
+  border-right: 2px solid var(--color-sidebar-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.hidden {
+  width: 70px;
+}
+
+.header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-sidebar-border);
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.title {
+  font: var(--font-sidebar-title);
+  color: var(--color-sidebar-title-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-sidebar-button-toggle-text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle:hover {
+  background: var(--color-sidebar-button-toggle-text-hover);
+}
+
+.subtitle {
+  font: var(--font-sidebar-subtitle);
+  color: var(--color-sidebar-subtitle-text);
+}
+
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sidebar-scroll);
+  padding-right: 5px;
+}
+
+.navList {
+  list-style: none;
+}
+
+.navItem {
+  margin-bottom: 12px;
+}
+
+.childrenList {
+  list-style: none;
+  margin: 8px 0 0 16px;
+  overflow: hidden;
+  border-left: 2px solid var(--color-sidebar-border);
+  padding-left: 10px;
+}
+
+.childrenList .navItem {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100dvh;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.hidden {
+    left: -100%;
+    width: 100%;
+  }
+
+  .toggle {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    z-index: 101;
+    background: var(--color-sidebar-bg);
+    border: 2px solid var(--color-sidebar-border);
+    border-radius: 6px;
+    box-shadow: var(--shadow-sidebar-nav-link);
+  }
+}

@@ -1,0 +1,731 @@
+import type { IMethod } from '@/entities/method';
+
+export const fmtMethods: IMethod[] = [
+  {
+    name: 'Print',
+    syntax: 'func Print(a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа для вывода',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество записанных байт',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка записи в stdout, обычно nil',
+      },
+    ],
+    description:
+      'Print форматирует значения аргументов, используя для них форматы по умолчанию, и записывает результат в стандартный поток вывода (stdout). Пробелы добавляются между аргументами, только если ни один из них не является строкой, а перевод строки в конце не добавляется.',
+
+    example:
+      'n, err := fmt.Print("Status:", "OK", "\\n")\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// Status:OK\n' +
+      '// n = 10 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Print',
+  },
+  {
+    name: 'Printf',
+    syntax: 'func Printf(format string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'format',
+        description: 'Строка формата с verbs-плейсхолдерами',
+      },
+      {
+        name: 'a',
+        description: 'Значения, подставляемые вместо verbs по порядку',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество записанных байт',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка записи в stdout, обычно nil',
+      },
+    ],
+    description:
+      'Printf форматирует значения аргументов согласно verbs-плейсхолдерам в строке формата и записывает результат в стандартный поток вывода (stdout).',
+    example:
+      'name := "Roman"\n' +
+      'age := 30\n' +
+      'city := "Moscow"\n' +
+      'n, err := fmt.Printf("%s is %d years old and lives in %s\\n", name, age, city)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// Roman is 30 years old and lives in Moscow\n' +
+      '// n = 42 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Printf',
+  },
+  {
+    name: 'Println',
+    syntax: 'func Println(a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа для вывода',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество записанных байт',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка записи в stdout, обычно nil',
+      },
+    ],
+    description:
+      'Println выводит значения аргументов, используя для них форматы по умолчанию, и записывает результат в стандартный поток вывода (stdout). Между аргументами всегда добавляются пробелы, а в конце выводится символ новой строки.',
+
+    example:
+      'n, err := fmt.Println("Status:", "OK")\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// Status: OK\n' +
+      '// n = 11 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Println',
+  },
+  {
+    name: 'Sprint',
+    syntax: 'func Sprint(a ...any) string',
+    parameters: [
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа',
+      },
+    ],
+    returns: [
+      {
+        name: 'string',
+        description: 'Отформатированная строка',
+      },
+    ],
+    description:
+      'Sprint форматирует значения аргументов, используя для них форматы по умолчанию, и возвращает полученную строку. Пробелы добавляются между аргументами, только если ни один из них не является строкой.',
+
+    example:
+      's := fmt.Sprint("a", "b", 1, 2)\n' + 'fmt.Println(s)\n\n' + '// ab1 2',
+    specification: 'https://pkg.go.dev/fmt#Sprint',
+  },
+  {
+    name: 'Sprintf',
+    syntax: 'func Sprintf(format string, a ...any) string',
+    parameters: [
+      {
+        name: 'format',
+        description: 'Строка формата с verbs-плейсхолдерами',
+      },
+      {
+        name: 'a',
+        description: 'Значения, подставляемые вместо verbs по порядку',
+      },
+    ],
+    returns: [
+      {
+        name: 'string',
+        description: 'Отформатированная строка',
+      },
+    ],
+    description:
+      'Sprintf форматирует значения аргументов согласно verbs-плейсхолдерам в строке формата и возвращает полученную строку.',
+
+    example:
+      'msg := fmt.Sprintf("%d + %d = %d", 2, 3, 5)\n' +
+      'fmt.Println(msg)\n\n' +
+      '// 2 + 3 = 5',
+    specification: 'https://pkg.go.dev/fmt#Sprintf',
+  },
+  {
+    name: 'Sprintln',
+    syntax: 'func Sprintln(a ...any) string',
+    parameters: [
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа',
+      },
+    ],
+    returns: [
+      {
+        name: 'string',
+        description: 'Отформатированная строка',
+      },
+    ],
+    description:
+      'Sprintln форматирует значения аргументов, используя для них форматы по умолчанию, и возвращает полученную строку. Между аргументами всегда добавляются пробелы, а в конце добавляется символ новой строки.',
+
+    example:
+      's := fmt.Sprintln("Count:", 3)\n' + 'fmt.Print(s)\n\n' + '// Count: 3',
+    specification: 'https://pkg.go.dev/fmt#Sprintln',
+  },
+  {
+    name: 'Fprint',
+    syntax: 'func Fprint(w io.Writer, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'w',
+        description: 'Получатель вывода, реализующий io.Writer',
+      },
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа для вывода',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество записанных байт',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка записи в w, обычно nil',
+      },
+    ],
+    description:
+      'Fprint форматирует значения аргументов, используя для них форматы по умолчанию, и записывает результат в поток вывода (io.Writer). Пробелы добавляются между аргументами, только если ни один из них не является строкой, а перевод строки в конце не добавляется.',
+
+    example:
+      'var buf bytes.Buffer\n' +
+      'n, err := fmt.Fprint(&buf, "id=", 42)\n' +
+      'fmt.Println(buf.String())\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// id=42\n' +
+      '// n = 5 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Fprint',
+  },
+  {
+    name: 'Fprintf',
+    syntax:
+      'func Fprintf(w io.Writer, format string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'w',
+        description: 'Получатель вывода, реализующий io.Writer',
+      },
+      {
+        name: 'format',
+        description: 'Строка формата с verbs-плейсхолдерами',
+      },
+      {
+        name: 'a',
+        description: 'Значения, подставляемые вместо verbs по порядку',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество записанных байт',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка записи в w, обычно nil',
+      },
+    ],
+    description:
+      'Fprintf форматирует значения аргументов согласно verbs-плейсхолдерам в строке формата и записывает результат в поток вывода (io.Writer) вместо стандартного вывода — основной способ форматированного вывода в файлы, буферы и сетевые соединения.',
+
+    example:
+      'var buf bytes.Buffer\n' +
+      'n, err := fmt.Fprintf(&buf, "%s has %d unread messages", "Roman", 5)\n' +
+      'fmt.Println(buf.String())\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// Roman has 5 unread messages\n' +
+      '// n = 27 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Fprintf',
+  },
+  {
+    name: 'Fprintln',
+    syntax: 'func Fprintln(w io.Writer, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'w',
+        description: 'Получатель вывода, реализующий io.Writer',
+      },
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа для вывода',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество записанных байт',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка записи в w, обычно nil',
+      },
+    ],
+    description:
+      'Fprintln форматирует значения аргументов, используя для них форматы по умолчанию, и записывает результат в поток вывода (io.Writer). Между аргументами всегда добавляются пробелы, а в конце выводится символ новой строки.',
+
+    example:
+      'n, err := fmt.Fprintln(os.Stderr, "warning: something went wrong")\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// warning: something went wrong\n' +
+      '// n = 30 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Fprintln',
+  },
+  {
+    name: 'Errorf',
+    syntax: 'func Errorf(format string, a ...any) error',
+    parameters: [
+      {
+        name: 'format',
+        description: 'Строка формата с verbs-плейсхолдерами',
+      },
+      {
+        name: 'a',
+        description: 'Значения, подставляемые вместо verbs по порядку',
+      },
+    ],
+    returns: [
+      {
+        name: 'error',
+        description: 'Новая ошибка, созданная по шаблону',
+      },
+    ],
+    description:
+      'Errorf форматирует значения аргументов согласно verbs-плейсхолдерам в строке формата и возвращает результат как error. Verb %w оборачивает переданную ошибку.',
+
+    example:
+      'err := fmt.Errorf("Не удалось открыть файл %q: %w", "data.txt", os.ErrNotExist)\n' +
+      'fmt.Println(err)\n\n' +
+      '// Не удалось открыть файл "data.txt": file does not exist',
+    specification: 'https://pkg.go.dev/fmt#Errorf',
+  },
+  {
+    name: 'Scan',
+    syntax: 'func Scan(a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'a',
+        description:
+          'Указатели на переменные, в которые будут записаны считанные значения',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description:
+          'Ошибка чтения или несоответствия типа, io.EOF при преждевременном конце ввода',
+      },
+    ],
+    description:
+      'Scan читает из os.Stdin, разделяя ввод по пробелам и переводам строк, и записывает считанные значения в аргументы. Каждый аргумент должен быть указателем —  функция автоматически определяет его тип и сохраняет в него очередное отсканированное значение, преобразуя его к нужному типу.',
+
+    example:
+      'var login string\n' +
+      'var score int\n' +
+      'n, err := fmt.Scan(&login, &score)\n' +
+      'fmt.Println("login =", login, "score =", score)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// если в stdin ввести: vasya 42\n' +
+      '// login = vasya score = 42\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Scan',
+  },
+  {
+    name: 'Scanf',
+    syntax: 'func Scanf(format string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'format',
+        description:
+          'Строка формата с verbs-плейсхолдерами, описывающая ожидаемую структуру ввода',
+      },
+      {
+        name: 'a',
+        description:
+          'Указатели на переменные, в которые будут записаны считанные значения',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка, если ввод не совпал с format',
+      },
+    ],
+    description:
+      'Scanf читает из os.Stdin по строке формата: обычный текст должен совпасть с вводом, а каждый verb сопоставляется с очередным аргументом-указателем и парсится согласно своему типу.',
+
+    example:
+      'var day, month, year int\n' +
+      'n, err := fmt.Scanf("%d/%d/%d", &day, &month, &year)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// если в stdin ввести: 02/08/2026\n' +
+      '// n = 3 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Scanf',
+  },
+  {
+    name: 'Scanln',
+    syntax: 'func Scanln(a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'a',
+        description:
+          'Указатели на переменные, в которые будут записаны считанные значения',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description:
+          'Ошибка чтения, если строка закончилась раньше, чем заполнились все аргументы',
+      },
+    ],
+    description:
+      'Scanln читает из os.Stdin, разделяя ввод по пробелам, и записывает считанные значения в аргументы. Каждый аргумент должен быть указателем — функция автоматически определяет его тип и сохраняет в него очередное отсканированное значение, преобразуя его к нужному типу. Сканирование останавливается на первом переводе строки, поэтому все аргументы должны быть введены в одной строке.',
+
+    example:
+      'var width, height int\n' +
+      'n, err := fmt.Scanln(&width, &height)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// если в stdin ввести: 1920 1080\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Scanln',
+  },
+  {
+    name: 'Sscan',
+    syntax: 'func Sscan(str string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'str',
+        description: 'Строка-источник данных для сканирования',
+      },
+      {
+        name: 'a',
+        description:
+          'Указатели на переменные, в которые будут записаны считанные значения',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка чтения или несоответствия типа',
+      },
+    ],
+    description:
+      'Sscan читает из строки-источника, разделяя её содержимое по пробелам и переводам строк, и записывает считанные значения в аргументы. Каждый аргумент должен быть указателем — функция автоматически определяет его тип и сохраняет в него очередное отсканированное значение, преобразуя его к нужному типу.',
+
+    example:
+      'var x, y int\n' +
+      'n, err := fmt.Sscan("10 20", &x, &y)\n' +
+      'fmt.Println("x =", x, "y =", y)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// x = 10 y = 20\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Sscan',
+  },
+  {
+    name: 'Sscanf',
+    syntax:
+      'func Sscanf(str string, format string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'str',
+        description: 'Строка-источник данных',
+      },
+      {
+        name: 'format',
+        description:
+          'Строка формата с verbs-плейсхолдерами, описывающая ожидаемую структуру str',
+      },
+      {
+        name: 'a',
+        description: 'Указатели на переменные для считанных значений',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка, если str не совпала с format',
+      },
+    ],
+    description:
+      'Sscanf читает из строки-источника согласно verbs-плейсхолдерам в строке формата: обычный текст должен совпасть с её содержимым, а каждый verb сопоставляется с очередным аргументом-указателем и парсится согласно своему типу.',
+
+    example:
+      'var h, m int\n' +
+      'n, err := fmt.Sscanf("14:05", "%d:%d", &h, &m)\n' +
+      'fmt.Println("h =", h, "m =", m)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// h = 14 m = 5\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Sscanf',
+  },
+  {
+    name: 'Sscanln',
+    syntax: 'func Sscanln(str string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'str',
+        description: 'Строка-источник данных для сканирования',
+      },
+      {
+        name: 'a',
+        description: 'Указатели на переменные для считанных значений',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description:
+          'Ошибка, если строка закончилась раньше, чем заполнились все аргументы',
+      },
+    ],
+    description:
+      'Sscanln читает из строки-источника, разделяя её содержимое по пробелам, и записывает считанные значения в аргументы. Каждый аргумент должен быть указателем — функция автоматически определяет его тип и сохраняет в него очередное отсканированное значение, преобразуя его к нужному типу. Сканирование останавливается на первом переводе строки внутри строки-источника.',
+
+    example:
+      'var a, b string\n' +
+      'n, err := fmt.Sscanln("foo bar", &a, &b)\n' +
+      'fmt.Println("a =", a, "b =", b)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// a = foo b = bar\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Sscanln',
+  },
+  {
+    name: 'Fscan',
+    syntax: 'func Fscan(r io.Reader, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'r',
+        description: 'Источник данных, реализующий io.Reader',
+      },
+      {
+        name: 'a',
+        description: 'Указатели на переменные для считанных значений',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка чтения из r, io.EOF при достижении конца',
+      },
+    ],
+    description:
+      'Fscan читает из источника данных, разделяя содержимое по пробелам и переводам строк, и записывает считанные значения в аргументы. Каждый аргумент должен быть указателем — функция автоматически определяет его тип и сохраняет в него очередное отсканированное значение, преобразуя его к нужному типу.',
+
+    example:
+      'r := strings.NewReader("10 20")\n' +
+      'var x, y int\n' +
+      'n, err := fmt.Fscan(r, &x, &y)\n' +
+      'fmt.Println("x =", x, "y =", y)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// x = 10 y = 20\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Fscan',
+  },
+  {
+    name: 'Fscanf',
+    syntax:
+      'func Fscanf(r io.Reader, format string, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'r',
+        description: 'Источник данных, реализующий io.Reader',
+      },
+      {
+        name: 'format',
+        description:
+          'Строка формата с verbs-плейсхолдерами, описывающая ожидаемую структуру ввода',
+      },
+      {
+        name: 'a',
+        description: 'Указатели на переменные для считанных значений',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description: 'Ошибка, если ввод не совпал с format',
+      },
+    ],
+    description:
+      'Fscanf читает из источника данных согласно verbs-плейсхолдерам в строке формата: обычный текст должен совпасть с вводом, а каждый verb сопоставляется с очередным аргументом-указателем и парсится согласно своему типу.',
+
+    example:
+      'r := strings.NewReader("14:05")\n' +
+      'var h, m int\n' +
+      'n, err := fmt.Fscanf(r, "%d:%d", &h, &m)\n' +
+      'fmt.Println("h =", h, "m =", m)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// h = 14 m = 5\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Fscanf',
+  },
+  {
+    name: 'Fscanln',
+    syntax: 'func Fscanln(r io.Reader, a ...any) (n int, err error)',
+    parameters: [
+      {
+        name: 'r',
+        description: 'Источник данных, реализующий io.Reader',
+      },
+      {
+        name: 'a',
+        description: 'Указатели на переменные для считанных значений',
+      },
+    ],
+    returns: [
+      {
+        name: 'n int',
+        description: 'Количество успешно отсканированных элементов',
+      },
+      {
+        name: 'err error',
+        description:
+          'Ошибка, если строка в r закончилась раньше, чем заполнились все аргументы',
+      },
+    ],
+    description:
+      'Fscanln читает из источника данных, разделяя содержимое по пробелам, и записывает считанные значения в аргументы. Каждый аргумент должен быть указателем — функция автоматически определяет его тип и сохраняет в него очередное отсканированное значение, преобразуя его к нужному типу. Сканирование останавливается на первом переводе строки в источнике.',
+
+    example:
+      'r := strings.NewReader("foo bar\\n")\n' +
+      'var a, b string\n' +
+      'n, err := fmt.Fscanln(r, &a, &b)\n' +
+      'fmt.Println("a =", a, "b =", b)\n' +
+      'fmt.Println("n =", n, "err =", err)\n\n' +
+      '// a = foo b = bar\n' +
+      '// n = 2 err = <nil>',
+    specification: 'https://pkg.go.dev/fmt#Fscanln',
+  },
+  {
+    name: 'Append',
+    syntax: 'func Append(b []byte, a ...any) []byte',
+    parameters: [
+      {
+        name: 'b',
+        description:
+          'Слайс байт, к которому будет дописан результат форматирования',
+      },
+      {
+        name: 'a',
+        description: 'Одно или несколько значений любого типа',
+      },
+    ],
+    returns: [
+      {
+        name: '[]byte',
+        description:
+          'Слайс b с дописанным в конец отформатированным результатом',
+      },
+    ],
+    description:
+      'Append форматирует значения аргументов, используя для них форматы по умолчанию, пробел добавляется между аргументами, только если ни один из них не является строкой, и дописывает результат в конец слайса байт, переиспользуя его capacity — это снижает число аллокаций.',
+
+    example:
+      'b := []byte("id=")\n' +
+      'b = fmt.Append(b, 42)\n' +
+      'fmt.Println(string(b))\n\n' +
+      '// id=42',
+    specification: 'https://pkg.go.dev/fmt#Append',
+  },
+  {
+    name: 'Appendf',
+    syntax: 'func Appendf(b []byte, format string, a ...any) []byte',
+    parameters: [
+      {
+        name: 'b',
+        description:
+          'Слайс байт, к которому будет дописан результат форматирования',
+      },
+      {
+        name: 'format',
+        description: 'Строка формата с verbs-плейсхолдерами',
+      },
+      {
+        name: 'a',
+        description:
+          'Переданные значения, подставляемые вместо verbs по порядку',
+      },
+    ],
+    returns: [
+      {
+        name: '[]byte',
+        description: 'Слайс b с дописанным отформатированным результатом',
+      },
+    ],
+    description:
+      'Appendf форматирует значения аргументов согласно verbs-плейсхолдерам в строке формата и дописывает результат в конец слайса байт.',
+
+    example:
+      'b := fmt.Appendf(nil, "%d/%d", 2026, 8)\n' +
+      'fmt.Println(string(b))\n\n' +
+      '// 2026/8',
+    specification: 'https://pkg.go.dev/fmt#Appendf',
+  },
+  {
+    name: 'Appendln',
+    syntax: 'func Appendln(b []byte, a ...any) []byte',
+    parameters: [
+      {
+        name: 'b',
+        description:
+          'Слайс байт, к которому будет дописан результат форматирования',
+      },
+      {
+        name: 'a',
+        description: 'Одно или несколько переданных значений любого типа',
+      },
+    ],
+    returns: [
+      {
+        name: '[]byte',
+        description:
+          'Слайс b с дописанным результатом и завершающим переводом строки',
+      },
+    ],
+    description:
+      'Appendln форматирует значения аргументов, используя для них форматы по умолчанию, и дописывает результат в конец переданного слайса байт. Между аргументами всегда добавляются пробелы, а в конце добавляется символ новой строки.',
+
+    example:
+      'b := fmt.Appendln(nil, "a", "b", 1)\n' +
+      'fmt.Print(string(b))\n\n' +
+      '// a b 1',
+    specification: 'https://pkg.go.dev/fmt#Appendln',
+  },
+];

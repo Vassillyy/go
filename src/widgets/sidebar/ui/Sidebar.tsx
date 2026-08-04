@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type FC, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import { sidebarMenu } from '@/shared/constants/sidebarMenu.ts';
@@ -7,7 +7,7 @@ import { NavItem } from './navItem/NavItem.tsx';
 import styles from './Sidebar.module.css';
 import { LongArrow } from '@/shared/ui/icons/LongArrow.tsx';
 
-export const Sidebar = () => {
+export const Sidebar: FC = () => {
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>(() => {
     const parentId = findParentItemIdForActivePath(
@@ -63,36 +63,36 @@ export const Sidebar = () => {
 
               return (
                 <li key={item.id || item.path} className={styles.navItem}>
-                    <NavItem
-                      to={item.path}
-                      isActive={isActive(item.path)}
-                      hasChildren={itemHasChildren}
-                      isExpanded={isExpanded}
+                  <NavItem
+                    to={item.path}
+                    isActive={isActive(item.path)}
+                    hasChildren={itemHasChildren}
+                    isExpanded={isExpanded}
                     onClick={
                       itemHasChildren
                         ? () => toggleItem(item.id!)
                         : closeOnMobile
                     }
-                    >
-                      {item.label}
-                    </NavItem>
+                  >
+                    {item.label}
+                  </NavItem>
 
-                    {itemHasChildren && isExpanded && item.children && (
-                      <ul className={styles.childrenList}>
-                        {item.children.map((child) => (
-                          <li key={child.path} className={styles.navItem}>
-                            <NavItem
-                              to={child.path}
-                              isActive={isActive(child.path)}
-                              variant="nested"
-                              onClick={closeOnMobile}
-                            >
-                              {child.label}
-                            </NavItem>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                  {itemHasChildren && isExpanded && item.children && (
+                    <ul className={styles.childrenList}>
+                      {item.children.map((child) => (
+                        <li key={child.path} className={styles.navItem}>
+                          <NavItem
+                            to={child.path}
+                            isActive={isActive(child.path)}
+                            variant="nested"
+                            onClick={closeOnMobile}
+                          >
+                            {child.label}
+                          </NavItem>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               );
             })}

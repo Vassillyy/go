@@ -1,0 +1,42 @@
+.node {
+  width: 180px;
+  border-radius: 8px;
+  text-align: center;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.3;
+  box-sizing: border-box;
+  user-select: none;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.handle {
+  visibility: hidden;
+}
+
+.category {
+  padding: 10px 14px;
+  background: #eafbf1;
+  border: 2px solid #2ecc71;
+  color: #14532d;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: default;
+}
+
+.child {
+  padding: 6px 10px;
+  background: #ffffff;
+  border: 1px solid #cfead9;
+  color: #333333;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.child:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

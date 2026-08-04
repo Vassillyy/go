@@ -9,22 +9,7 @@ export interface ISidebarItem {
 
 export const sidebarMenu: ISidebarItem[] = [
   {
-    path: AppPaths.MAIN,
-    label: 'Главная страница',
-  },
-  {
-    path: '#',
-    id: 'go',
+    path: AppPaths.GO_SCHEME,
     label: 'Go',
-    children: [
-      {
-        path: AppPaths.GO,
-        label: 'Основы Go',
-      },
-      {
-        path: AppPaths.GO_METHODS,
-        label: 'API GO',
-      },
-    ],
   },
 ];

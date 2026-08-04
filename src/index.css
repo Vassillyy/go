@@ -48,27 +48,6 @@
     var(--font-family);
   --shadow-sidebar-nav-link: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-  /* Pills */
-  --color-pills-border: #e8f5e9;
-  --color-pills-border-hover: #a5d6a7;
-  --color-pills-bg: #ffffff;
-  --color-pills-bg-active: linear-gradient(135deg, #5bc47d, #4cb06c);
-  --color-pills-bg-active-hover: linear-gradient(135deg, #4cb06c, #3da15f);
-  --color-pills-text: #2e7d32;
-  --color-pills-text-hover: #1b5e20;
-  --color-pills-text-active: #ffffff;
-  --font-pills: var(--font-weight-600) var(--font-size-12) var(--font-family);
-  --shadow-pills-hover: 0 3px 8px rgba(76, 176, 108, 0.15);
-
-  /* PageContainer */
-  --color-page-container-bg: #f8fff9;
-  --color-page-container-text: #333;
-  --color-page-container-title-text: #2c3e50;
-  --color-page-container-scroll: #c8e6c9 #f5fff7;
-  --font-page-container-title: var(--font-weight-400) var(--font-size-30)
-    var(--font-family);
-  --shadow-page-container-content: 0 2px 10px rgba(0, 0, 0, 0.05);
-
   /* Input */
   --color-input-border: #a5d6a7;
   --color-input-border-focus: #2e7d32;
@@ -113,45 +92,6 @@
   /* MainLayout */
   --color-main-layout-bg: #ffffff;
 
-  /* TopicLayout */
-  --color-topic-layout-sidebar-bg: #f5f5f5;
-  --color-topic-layout-sidebar-border: #e0e0e0;
-  --color-topic-layout-sidebar-scroll: gray #f5fff7;
-  --color-topic-layout-title: #333;
-  --color-topic-layout-toggle-text: #666;
-  --color-topic-layout-toggle-text-hover: #333;
-  --color-topic-layout-toggle-bg-hover: #e0e0e0;
-  --color-topic-layout-nav-link-text: #555;
-  --color-topic-layout-nav-link-text-hover: #333;
-  --color-topic-layout-nav-link-bg-hover: #e8e8e8;
-  --font-topic-layout-title: var(--font-weight-600) var(--font-size-18)
-    var(--font-family);
-  --font-topic-layout-nav-link: var(--font-weight-400) var(--font-size-14)
-    var(--font-family);
-
-  /* GoContentPage */
-  --color-go-content-page-no-result-text: #808080;
-  --font-go-content-page-no-result: var(--font-weight-600) var(--font-size-18)
-    var(--font-family);
-
-  /* TopicCard */
-  --color-topic-card-bg: #f8fbf8;
-  --color-topic-card-border: #e8f5e9;
-  --color-topic-card-border-hover: #c8e6c9;
-  --color-topic-card-title: #2c3e50;
-  --font-topic-card: var(--font-weight-600) var(--font-size-15)
-    var(--font-family);
-  --shadow-topic-card-hover: 0 2px 8px rgba(76, 175, 80, 0.1);
-
-  /* GoMethodsPage */
-  --color-go-methods-page-title: #2c3e50;
-  --color-go-methods-page-title-border: #4dabf7;
-  --color-go-methods-page-no-result-text: #808080;
-  --font-go-methods-page: var(--font-weight-400) var(--font-size-24)
-    var(--font-family);
-  --font-go-methods-page-no-result: var(--font-weight-600) var(--font-size-18)
-    var(--font-family);
-
   /* MethodCard */
   --color-method-card-border: #e9ecef;
   --color-method-card-button-arrow: #1864ab;
@@ -188,49 +128,6 @@
     var(--font-family);
   --shadow-method-card-syntax: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-method-card-link: 0 2px 4px rgba(77, 171, 247, 0.2);
-
-  /* ErrorList */
-  --color-error-list-bg: linear-gradient(135deg, #fff9f9 0%, #fff5f5 100%);
-  --color-error-list-border: #ffcccc;
-  --color-error-list-border-left: #ff6b6b;
-  --color-error-list-header-border: #ffcccc;
-  --color-error-list-header-text: #d63939;
-  --color-error-list-error-text: #a61e1e;
-  --color-error-list-error-border: #ffe6e6;
-  --font-error-list-header: var(--font-weight-600) var(--font-size-13)
-    var(--font-family);
-  --font-error-list-error: var(--font-weight-400) var(--font-size-13) / 1.6
-    var(--font-family);
-  --shadow-error-list: var(0 2px 4px rgba(255, 107, 107, 0.1));
-
-  /* GoTopicPage */
-  --color-go-topic-page-back-button: #3b82f6;
-  --color-go-topic-page-back-button-hover: #1d4ed8;
-  --color-go-topic-page-title: #808080;
-  --color-go-topic-page-introduction: #333;
-  --color-go-topic-page-introduction-border: #eee;
-  --color-go-topic-page-scroll: #c8e6c9 #f5fff7;
-  --font-go-topic-page-back-button: var(--font-weight-400) var(--font-size-16)
-    var(--font-family);
-  --font-go-topic-page-title: var(--font-weight-500) var(--font-size-24)
-    var(--font-family);
-  --font-go-topic-page-introduction: var(--font-weight-400)
-    var(--font-size-18) / 1.2 var(--font-family);
-
-  /* SectionItem */
-  --color-section-item-border: #d3d3d3;
-  --color-section-item-title: #333;
-  --color-section-item-content: #444;
-  --color-section-item-addition-bg: #e9ecef;
-  --color-section-item-addition-text: #495057;
-  --color-section-item-addition-border: #ced4da;
-  --color-section-item-button-arrow: #191970;
-  --font-section-item-title: var(--font-weight-500) var(--font-size-20)
-    var(--font-family);
-  --font-section-item-content: var(--font-weight-400) var(--font-size-16) / 1.6
-    var(--font-family);
-  --font-section-item-addition: var(--font-weight-400) var(--font-size-15) / 1.6
-    var(--font-family);
 
 }
 

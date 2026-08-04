@@ -3,8 +3,9 @@ import cn from 'classnames';
 import { ShortArrow } from '@/shared/ui';
 import styles from './NavItem.module.css';
 import type { INavItem } from './NavItem.types.ts';
+import type { FC } from 'react';
 
-export const NavItem = ({
+export const NavItem: FC<INavItem> = ({
   to,
   children,
   isActive = false,
@@ -13,7 +14,7 @@ export const NavItem = ({
   isExpanded = false,
   onClick,
   ...props
-}: INavItem) => {
+}) => {
   return (
     <Link
       to={to}

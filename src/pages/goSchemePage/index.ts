@@ -1,0 +1,1 @@
+export { GoSchemePage } from './ui/GoSchemePage.tsx';

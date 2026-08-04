@@ -1,6 +1,2 @@
-export {
-  type IMethod,
-  type TConfig,
-  type Methods,
-  labelMethods,
-} from './types.ts';
+export { type IMethod } from './model/types.ts';
+export { MethodCard } from './ui/methodCard/MethodCard.tsx';

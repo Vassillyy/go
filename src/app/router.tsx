@@ -1,10 +1,9 @@
-import { createHashRouter } from 'react-router-dom';
-import { GoContentPage } from '@/pages/goContentPage';
-import { MainPage } from '@/pages/mainPage';
-import { GoMethodsPage } from '@/pages/goMethodsPage';
-import { GoTopicPage } from '@/pages/goTopicPage';
+import { createHashRouter, Navigate } from 'react-router-dom';
+import { GoPackagePage } from '@/pages/goPackagePage';
+import { GoSchemePage } from '@/pages/goSchemePage';
+import { GoSchemeTopicPage } from '@/pages/goSchemeTopicPage';
 import { AppPaths } from '@/shared/constants/route';
-import { MainLayout, TopicLayout } from './layouts';
+import { MainLayout } from './layouts';
 
 export const router = createHashRouter([
   {
@@ -13,26 +12,20 @@ export const router = createHashRouter([
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: <Navigate to={AppPaths.GO_SCHEME} replace />,
       },
       {
-        path: AppPaths.GO,
-        element: <GoContentPage />,
-      },
-      {
-        path: AppPaths.GO_METHODS,
-        element: <GoMethodsPage />,
+        path: AppPaths.GO_SCHEME,
+        element: <GoSchemePage />,
       },
     ],
   },
   {
-    path: `${AppPaths.GO}/topic/:topicId`,
-    element: <TopicLayout />,
-    children: [
-      {
-        index: true,
-        element: <GoTopicPage />,
-      },
-    ],
+    path: `${AppPaths.GO_SCHEME}/topic/:topicId`,
+    element: <GoSchemeTopicPage />,
+  },
+  {
+    path: `${AppPaths.GO_SCHEME}/package/:packageId`,
+    element: <GoPackagePage />,
   },
 ]);

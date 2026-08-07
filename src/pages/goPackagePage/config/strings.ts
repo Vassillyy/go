@@ -21,12 +21,12 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Contains сообщает, содержит ли строка s подстроку substr. Пустая подстрока считается содержащейся в любой строке.',
-
+      'Contains проверяет, содержится ли substr в s. Пустая подстрока считается содержащейся в любой строке.',
     example:
-      'ok := strings.Contains("roman@example.com", "@")\n' +
-      'fmt.Println(ok)\n\n' +
-      '// true',
+      'ok1 := strings.Contains("roman@example.com", "@")\n' +
+      'ok2 := strings.Contains("roman@example.com", "#")\n' +
+      'fmt.Println(ok1, ok2)\n\n' +
+      '// true false',
     specification: 'https://pkg.go.dev/strings#Contains',
   },
   {
@@ -49,12 +49,12 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'ContainsAny сообщает, содержит ли строка s хотя бы один из символов, перечисленных в chars.',
-
+      'ContainsAny проверяет, содержит ли s хотя бы один из символов, перечисленных в chars.',
     example:
-      'ok := strings.ContainsAny("qwerty123", "!@#$")\n' +
-      'fmt.Println(ok)\n\n' +
-      '// false',
+      'ok1 := strings.ContainsAny("qwerty123", "0123456789")\n' +
+      'ok2 := strings.ContainsAny("qwerty123", "!@#$")\n' +
+      'fmt.Println(ok1, ok2)\n\n' +
+      '// true false',
     specification: 'https://pkg.go.dev/strings#ContainsAny',
   },
   {
@@ -76,13 +76,12 @@ export const stringsMethods: IMethod[] = [
         description: 'true, если s начинается с prefix',
       },
     ],
-    description:
-      'HasPrefix сообщает, начинается ли строка s с указанного префикса prefix.',
-
+    description: 'HasPrefix проверяет, начинается ли s с prefix.',
     example:
-      'ok := strings.HasPrefix("https://example.com", "https://")\n' +
-      'fmt.Println(ok)\n\n' +
-      '// true',
+      'ok1 := strings.HasPrefix("https://example.com", "https://")\n' +
+      'ok2 := strings.HasPrefix("https://example.com", "http://")\n' +
+      'fmt.Println(ok1, ok2)\n\n' +
+      '// true false',
     specification: 'https://pkg.go.dev/strings#HasPrefix',
   },
   {
@@ -104,13 +103,12 @@ export const stringsMethods: IMethod[] = [
         description: 'true, если s заканчивается на suffix',
       },
     ],
-    description:
-      'HasSuffix сообщает, заканчивается ли строка s указанным суффиксом suffix.',
-
+    description: 'HasSuffix проверяет, заканчивается ли s на suffix.',
     example:
-      'ok := strings.HasSuffix("report.pdf", ".pdf")\n' +
-      'fmt.Println(ok)\n\n' +
-      '// true',
+      'ok1 := strings.HasSuffix("report.pdf", ".pdf")\n' +
+      'ok2 := strings.HasSuffix("report.pdf", ".docx")\n' +
+      'fmt.Println(ok1, ok2)\n\n' +
+      '// true false',
     specification: 'https://pkg.go.dev/strings#HasSuffix',
   },
   {
@@ -129,17 +127,16 @@ export const stringsMethods: IMethod[] = [
     returns: [
       {
         name: 'int',
-        description:
-          'Индекс первого вхождения substr в s, либо -1, если подстрока не найдена',
+        description: 'Индекс первого вхождения substr, либо -1',
       },
     ],
     description:
-      'Index возвращает индекс первого вхождения подстроки substr в строке s. Поиск ведётся по байтам, а не по символам (rune).',
-
+      'Index возвращает индекс первого вхождения substr в s, либо -1, если substr не найдена. Поиск ведётся по байтам, а не по символам (rune).',
     example:
-      'i := strings.Index("roman@example.com", "@")\n' +
-      'fmt.Println(i)\n\n' +
-      '// 5',
+      'i1 := strings.Index("roman@example.com", "@")\n' +
+      'i2 := strings.Index("roman@example.com", "#")\n' +
+      'fmt.Println(i1, i2)\n\n' +
+      '// 5 -1',
     specification: 'https://pkg.go.dev/strings#Index',
   },
   {
@@ -158,17 +155,16 @@ export const stringsMethods: IMethod[] = [
     returns: [
       {
         name: 'int',
-        description:
-          'Индекс первого вхождения байта c в s, либо -1, если байт не найден',
+        description: 'Индекс первого вхождения байта c, либо -1',
       },
     ],
     description:
-      'IndexByte возвращает индекс первого вхождения байта c в строке s. Работает быстрее Index за счёт поиска одного конкретного байта, а не подстроки.',
-
+      'IndexByte возвращает индекс первого вхождения байта c в s, либо -1, если байт не найден. Работает быстрее Index за счёт поиска одного конкретного байта, а не подстроки.',
     example:
-      'i := strings.IndexByte("14:05", \':\')\n' +
-      'fmt.Println(i)\n\n' +
-      '// 2',
+      'i1 := strings.IndexByte("14:05", \':\')\n' +
+      'i2 := strings.IndexByte("14:05", \'/\')\n' +
+      'fmt.Println(i1, i2)\n\n' +
+      '// 2 -1',
     specification: 'https://pkg.go.dev/strings#IndexByte',
   },
   {
@@ -187,17 +183,16 @@ export const stringsMethods: IMethod[] = [
     returns: [
       {
         name: 'int',
-        description:
-          'Индекс последнего вхождения substr в s, либо -1, если подстрока не найдена',
+        description: 'Индекс последнего вхождения substr, либо -1',
       },
     ],
     description:
-      'LastIndex возвращает индекс последнего вхождения подстроки substr в строке s.',
-
+      'LastIndex возвращает индекс последнего вхождения substr в s, либо -1, если substr не найдена.',
     example:
-      'i := strings.LastIndex("/usr/local/bin", "/")\n' +
-      'fmt.Println(i)\n\n' +
-      '// 10',
+      'i1 := strings.LastIndex("/usr/local/bin", "/")\n' +
+      'i2 := strings.LastIndex("/usr/local/bin", "#")\n' +
+      'fmt.Println(i1, i2)\n\n' +
+      '// 10 -1',
     specification: 'https://pkg.go.dev/strings#LastIndex',
   },
   {
@@ -220,12 +215,12 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Count возвращает количество непересекающихся вхождений подстроки substr в строке s. Если substr — пустая строка, Count возвращает число символов (rune) в s плюс один.',
-
+      'Count возвращает количество непересекающихся вхождений substr в s: после каждого найденного совпадения поиск продолжается со следующего символа за ним, поэтому перекрывающиеся вхождения не считаются повторно. Если substr — пустая строка, Count возвращает число символов (rune) в s плюс один.',
     example:
-      'n := strings.Count("Roman,30,Moscow", ",")\n' +
-      'fmt.Println(n)\n\n' +
-      '// 2',
+      'n1 := strings.Count("Roman,30,Moscow", ",")\n' +
+      'n2 := strings.Count("aaaa", "aa")\n' +
+      'fmt.Println(n1, n2)\n\n' +
+      '// 2 2',
     specification: 'https://pkg.go.dev/strings#Count',
   },
   {
@@ -248,12 +243,14 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Split разбивает строку s на все подстроки, разделённые sep, и возвращает срез этих подстрок. Если sep — пустая строка, Split разбивает строку после каждого символа (rune).',
-
+      'Split разбивает s на все подстроки, разделённые sep, и возвращает срез этих подстрок. Если sep — пустая строка, Split разбивает строку после каждого символа (rune).',
     example:
-      'parts := strings.Split("Roman,30,Moscow", ",")\n' +
-      'fmt.Println(parts)\n\n' +
-      '// [Roman 30 Moscow]',
+      'parts1 := strings.Split("Roman,30,Moscow", ",")\n' +
+      'parts2 := strings.Split("Roman", "")\n' +
+      'fmt.Println(parts1)\n' +
+      'fmt.Println(parts2)\n\n' +
+      '// [Roman 30 Moscow]\n' +
+      '// [R o m a n]',
     specification: 'https://pkg.go.dev/strings#Split',
   },
   {
@@ -270,23 +267,24 @@ export const stringsMethods: IMethod[] = [
       },
       {
         name: 'n',
-        description:
-          'Максимальное число возвращаемых подстрок; при n < 0 ограничения нет',
+        description: 'Ограничение на число возвращаемых подстрок',
       },
     ],
     returns: [
       {
         name: '[]string',
-        description: 'Срез не более чем из n подстрок',
+        description: 'Срез подстрок, полученных при разбиении s по sep',
       },
     ],
     description:
-      'SplitN работает как Split, но ограничивает количество возвращаемых подстрок значением n. Последний элемент результата содержит остаток исходной строки, не тронутый разбиением.',
-
+      'SplitN разбивает s на подстроки, разделённые sep, и возвращает не более n из них. Если n > 0, последний элемент результата содержит остаток строки, не тронутый разбиением. Если n == 0, возвращается nil. Если n < 0, возвращаются все подстроки без ограничений.',
     example:
-      'parts := strings.SplitN("key=value=extra", "=", 2)\n' +
-      'fmt.Println(parts)\n\n' +
-      '// [key value=extra]',
+      'parts1 := strings.SplitN("key=value=extra", "=", 2)\n' +
+      'parts2 := strings.SplitN("key=value=extra", "=", -1)\n' +
+      'fmt.Println(parts1)\n' +
+      'fmt.Println(parts2)\n\n' +
+      '// [key value=extra]\n' +
+      '// [key value extra]',
     specification: 'https://pkg.go.dev/strings#SplitN',
   },
   {
@@ -305,10 +303,9 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Fields разбивает строку s на подстроки, удаляя один или несколько идущих подряд пробельных символов, согласно unicode.IsSpace. Пустой срез возвращается, если строка состоит только из пробелов.',
-
+      'Fields разбивает s на подстроки, удаляя один или несколько идущих подряд пробельных символов (пробел, таб, перевод строки и другие — согласно unicode.IsSpace). Пустой срез возвращается, если строка состоит только из пробельных символов.',
     example:
-      'words := strings.Fields("  The quick   brown fox ")\n' +
+      'words := strings.Fields("  The quick\\tbrown\\nfox ")\n' +
       'fmt.Println(words)\n\n' +
       '// [The quick brown fox]',
     specification: 'https://pkg.go.dev/strings#Fields',
@@ -333,8 +330,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Join объединяет элементы среза elems в одну строку, вставляя разделитель sep между соседними элементами.',
-
+      'Join объединяет элементы elems в одну строку, вставляя sep между соседними элементами.',
     example:
       's := strings.Join([]string{"usr", "local", "bin"}, "/")\n' +
       'fmt.Println(s)\n\n' +
@@ -361,8 +357,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Repeat возвращает новую строку, состоящую из count копий строки s, идущих подряд без разделителей. Паникует, если count отрицательный.',
-
+      'Repeat возвращает новую строку, состоящую из count копий s, идущих подряд без разделителей. Паникует, если count отрицательный.',
     example:
       's := strings.Repeat("-", 10)\n' + 'fmt.Println(s)\n\n' + '// ----------',
     specification: 'https://pkg.go.dev/strings#Repeat',
@@ -385,8 +380,7 @@ export const stringsMethods: IMethod[] = [
       },
       {
         name: 'n',
-        description:
-          'Максимальное число замен; при n < 0 заменяются все вхождения',
+        description: 'Максимальное число замен',
       },
     ],
     returns: [
@@ -396,12 +390,14 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Replace возвращает копию строки s, в которой первые n непересекающихся вхождений old заменены на new.',
-
+      'Replace возвращает копию s, в которой первые n непересекающихся вхождений old заменены на new. Если n < 0, заменяются все вхождения.',
     example:
-      's := strings.Replace("error error error", "error", "warning", 2)\n' +
-      'fmt.Println(s)\n\n' +
-      '// warning warning error',
+      's1 := strings.Replace("error error error", "error", "warning", 2)\n' +
+      's2 := strings.Replace("error error error", "error", "warning", -1)\n' +
+      'fmt.Println(s1)\n' +
+      'fmt.Println(s2)\n\n' +
+      '// warning warning error\n' +
+      '// warning warning warning',
     specification: 'https://pkg.go.dev/strings#Replace',
   },
   {
@@ -428,8 +424,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'ReplaceAll возвращает копию строки s, в которой все непересекающиеся вхождения old заменены на new. Эквивалентно Replace с n = -1.',
-
+      'ReplaceAll возвращает копию s, в которой все непересекающиеся вхождения old заменены на new. Эквивалентно Replace с n = -1.',
     example:
       's := strings.ReplaceAll("final report v2", " ", "_")\n' +
       'fmt.Println(s)\n\n' +
@@ -452,8 +447,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'ToUpper возвращает копию строки s, в которой все буквы приведены к верхнему регистру согласно правилам Unicode.',
-
+      'ToUpper возвращает копию s, в которой все буквы приведены к верхнему регистру согласно правилам Unicode.',
     example:
       's := strings.ToUpper("success")\n' + 'fmt.Println(s)\n\n' + '// SUCCESS',
     specification: 'https://pkg.go.dev/strings#ToUpper',
@@ -474,8 +468,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'ToLower возвращает копию строки s, в которой все буквы приведены к нижнему регистру согласно правилам Unicode.',
-
+      'ToLower возвращает копию s, в которой все буквы приведены к нижнему регистру согласно правилам Unicode.',
     example:
       's := strings.ToLower("Roman@Example.COM")\n' +
       'fmt.Println(s)\n\n' +
@@ -498,8 +491,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'TrimSpace возвращает копию строки s без пробельных символов в начале и в конце, согласно unicode.IsSpace.',
-
+      'TrimSpace возвращает копию s без пробельных символов в начале и в конце, согласно unicode.IsSpace.',
     example:
       'input := "  roman  "\n' +
       's := strings.TrimSpace(input)\n' +
@@ -527,8 +519,7 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'Trim возвращает копию строки s без всех начальных и конечных символов, входящих в набор cutset.',
-
+      'Trim возвращает копию s без всех начальных и конечных символов, входящих в набор cutset.',
     example:
       'value := `"Moscow"`\n' +
       's := strings.Trim(value, `"`)\n' +
@@ -552,17 +543,18 @@ export const stringsMethods: IMethod[] = [
     returns: [
       {
         name: 'string',
-        description:
-          'Строка s без префикса prefix, либо исходная строка без изменений, если s не начинается с prefix',
+        description: 'Строка s без prefix',
       },
     ],
     description:
-      'TrimPrefix возвращает строку s без указанного префикса prefix. Если s не начинается с prefix, строка возвращается без изменений.',
-
+      'TrimPrefix возвращает s без prefix. Если s не начинается с prefix, строка возвращается без изменений.',
     example:
-      's := strings.TrimPrefix("https://example.com", "https://")\n' +
-      'fmt.Println(s)\n\n' +
-      '// example.com',
+      's1 := strings.TrimPrefix("https://example.com", "https://")\n' +
+      's2 := strings.TrimPrefix("https://example.com", "ftp://")\n' +
+      'fmt.Println(s1)\n' +
+      'fmt.Println(s2)\n\n' +
+      '// example.com\n' +
+      '// https://example.com',
     specification: 'https://pkg.go.dev/strings#TrimPrefix',
   },
   {
@@ -581,17 +573,18 @@ export const stringsMethods: IMethod[] = [
     returns: [
       {
         name: 'string',
-        description:
-          'Строка s без суффикса suffix, либо исходная строка без изменений, если s не заканчивается на suffix',
+        description: 'Строка s без suffix',
       },
     ],
     description:
-      'TrimSuffix возвращает строку s без указанного суффикса suffix. Если s не заканчивается на suffix, строка возвращается без изменений.',
-
+      'TrimSuffix возвращает s без suffix. Если s не заканчивается на suffix, строка возвращается без изменений.',
     example:
-      's := strings.TrimSuffix("report.pdf", ".pdf")\n' +
-      'fmt.Println(s)\n\n' +
-      '// report',
+      's1 := strings.TrimSuffix("report.pdf", ".pdf")\n' +
+      's2 := strings.TrimSuffix("report.pdf", ".docx")\n' +
+      'fmt.Println(s1)\n' +
+      'fmt.Println(s2)\n\n' +
+      '// report\n' +
+      '// report.pdf',
     specification: 'https://pkg.go.dev/strings#TrimSuffix',
   },
   {
@@ -614,12 +607,12 @@ export const stringsMethods: IMethod[] = [
       },
     ],
     description:
-      'EqualFold сообщает, совпадают ли строки s и t без учёта регистра букв, согласно упрощённому Unicode case-folding.',
-
+      'EqualFold проверяет, совпадают ли s и t без учёта регистра букв, согласно упрощённому Unicode case-folding.',
     example:
-      'ok := strings.EqualFold("Roman", "roman")\n' +
-      'fmt.Println(ok)\n\n' +
-      '// true',
+      'ok1 := strings.EqualFold("Roman", "roman")\n' +
+      'ok2 := strings.EqualFold("Roman", "Vasya")\n' +
+      'fmt.Println(ok1, ok2)\n\n' +
+      '// true false',
     specification: 'https://pkg.go.dev/strings#EqualFold',
   },
 ];

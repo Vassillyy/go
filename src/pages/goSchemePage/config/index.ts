@@ -128,9 +128,10 @@ export const schemeConfig: ISchemeConfig = {
       childRoute: 'package',
       children: [
         { id: 'pkg-fmt', label: 'fmt' },
+        { id: 'pkg-strings', label: 'strings' },
         { id: 'pkg-os', label: 'os' },
         { id: 'pkg-io-bufio', label: 'io / bufio' },
-        { id: 'pkg-strings-strconv', label: 'strings / strconv' },
+        { id: 'pkg-strconv', label: 'strconv' },
         { id: 'pkg-time', label: 'time' },
         { id: 'pkg-context', label: 'context' },
         { id: 'pkg-encoding-json', label: 'encoding/json' },

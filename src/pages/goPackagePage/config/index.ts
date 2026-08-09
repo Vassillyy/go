@@ -5,6 +5,7 @@ import { osMethods } from './os.ts';
 import { strconvMethods } from './strconv.ts';
 import { ioMethods } from './io.ts';
 import { bufioMethods } from './bufio.ts';
+import { timeMethods } from './time.ts';
 
 export const packageConfigs: Record<string, IMethod[]> = {
   'pkg-fmt': fmtMethods,
@@ -13,4 +14,5 @@ export const packageConfigs: Record<string, IMethod[]> = {
   'pkg-strconv': strconvMethods,
   'pkg-io': ioMethods,
   'pkg-bufio': bufioMethods,
+  'pkg-time': timeMethods,
 };

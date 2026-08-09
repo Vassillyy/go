@@ -1,0 +1,13 @@
+.highlighted {
+  stroke: #2ecc71;
+  stroke-width: 2.5px;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawEdge 0.6s linear forwards;
+}
+
+@keyframes drawEdge {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

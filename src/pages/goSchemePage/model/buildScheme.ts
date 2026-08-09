@@ -2,12 +2,12 @@ import type { Edge } from '@xyflow/react';
 import type { ISchemeConfig } from '../config';
 import type { SchemeFlowNode } from './types';
 
-const NODE_WIDTH = 180;
-const NODE_HEIGHT = 40;
+export const NODE_WIDTH = 180;
+export const NODE_HEIGHT = 40;
 const PADDING = 30;
-const FIRST_CHILD_GAP = 50;
-const CHILD_GAP_X = 40;
-const TICK_HEIGHT = 60;
+const FIRST_CHILD_GAP = 20;
+const CHILD_GAP_X = 15;
+const TICK_HEIGHT = 50;
 const ROW_SPACING = 120;
 
 const CATEGORY_X = PADDING;
@@ -78,7 +78,8 @@ export const buildScheme = (scheme: ISchemeConfig): IBuildSchemeResult => {
         sourceHandle: 'right',
         target: childId,
         targetHandle: 'bottom',
-        type: 'step',
+        type: 'schemeEdge',
+        data: { highlighted: false },
       });
 
       maxX = Math.max(maxX, x + NODE_WIDTH);

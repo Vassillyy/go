@@ -131,6 +131,8 @@ export const schemeConfig: ISchemeConfig = {
         { id: 'pkg-strings', label: 'strings' },
         { id: 'pkg-os', label: 'os' },
         { id: 'pkg-strconv', label: 'strconv' },
+        { id: 'pkg-io', label: 'io' },
+        { id: 'pkg-bufio', label: 'bufio' },
       ],
     },
   ],

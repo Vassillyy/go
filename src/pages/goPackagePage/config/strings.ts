@@ -615,4 +615,29 @@ export const stringsMethods: IMethod[] = [
       '// true false',
     specification: 'https://pkg.go.dev/strings#EqualFold',
   },
+  {
+    name: 'NewReader',
+    syntax: 'func NewReader(s string) *Reader',
+    parameters: [
+      {
+        name: 's',
+        description: 'Строка, из которой будет читать Reader',
+      },
+    ],
+    returns: [
+      {
+        name: '*Reader',
+        description: 'Reader, читающий байты s',
+      },
+    ],
+    description:
+      'NewReader оборачивает s в *strings.Reader, реализующий io.Reader и другие интерфейсы чтения. Reader только читает s и не поддерживает запись.',
+    example:
+      'r := strings.NewReader("Hello, Roman!")\n' +
+      'buf := make([]byte, 5)\n' +
+      'n, err := r.Read(buf)\n' +
+      'fmt.Println(string(buf), n, err)\n\n' +
+      '// Hello 5 <nil>',
+    specification: 'https://pkg.go.dev/strings#NewReader',
+  },
 ];

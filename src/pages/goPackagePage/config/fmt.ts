@@ -711,4 +711,135 @@ export const fmtMethods: IMethod[] = [
       '// a b 1',
     specification: 'https://pkg.go.dev/fmt#Appendln',
   },
+  {
+    name: 'Stringer',
+    kind: 'interface',
+    syntax: 'type Stringer interface {\n\tString() string\n}',
+    description:
+      'Stringer реализуется типом, у которого есть метод String() string, определяющий его текстовое представление. Метод автоматически вызывается при форматировании значения через fmt (verb %v/%s) — в том числе внутри других пакетов, которые используют fmt для вывода.',
+    example:
+      'type Point struct{ X, Y int }\n\n' +
+      'func (p Point) String() string { return "Stringer" }\n\n' +
+      'func describe(s fmt.Stringer) string {\n' +
+      '  return s.String()\n' +
+      '}\n\n' +
+      'fmt.Println(describe(Point{1, 2}))\n\n' +
+      '// Stringer',
+    specification: 'https://pkg.go.dev/fmt#Stringer',
+  },
+  {
+    name: 'GoStringer',
+    kind: 'interface',
+    syntax: 'type GoStringer interface {\n\tGoString() string\n}',
+    description:
+      'GoStringer реализуется типом, у которого есть метод GoString() string, задающий его представление в виде Go-синтаксиса. Метод автоматически вызывается при форматировании значения через fmt (verb %#v) — в том числе внутри других пакетов, которые используют fmt для вывода.',
+    example:
+      'type Point struct{ X, Y int }\n\n' +
+      'func (p Point) GoString() string { return "GoStringer" }\n\n' +
+      'fmt.Printf("%#v\\n", Point{1, 2})\n\n' +
+      '// GoStringer',
+    specification: 'https://pkg.go.dev/fmt#GoStringer',
+  },
+  {
+    name: 'Formatter',
+    kind: 'interface',
+    syntax: 'type Formatter interface {\n\tFormat(f State, verb rune)\n}',
+    description:
+      'Formatter реализуется типом, у которого есть метод Format(f State, verb rune), который полностью берёт на себя вывод значения для любого verb, включая %v — метод автоматически вызывается при форматировании через fmt, в том числе внутри других пакетов, которые используют fmt для вывода. Внутри метода можно писать в f напрямую (он реализует io.Writer) или через fmt.Fprint/Fprintf(f, ...).',
+    example:
+      'type Percent float64\n\n' +
+      'func (p Percent) Format(f fmt.State, verb rune) {\n' +
+      "  if verb == 'd' {\n" +
+      '    f.Write([]byte("Formatter(d)")) // напрямую через Write\n' +
+      '    return\n' +
+      '  }\n' +
+      '  fmt.Fprint(f, "Formatter") // через Fprint\n' +
+      '}\n\n' +
+      'fmt.Println(Percent(42.567))\n' +
+      'fmt.Printf("%d\\n", Percent(42.567))\n\n' +
+      '// Formatter\n' +
+      '// Formatter(d)',
+    specification: 'https://pkg.go.dev/fmt#Formatter',
+  },
+  {
+    name: 'State',
+    kind: 'interface',
+    syntax:
+      'type State interface {\n\tWrite(b []byte) (n int, err error)\n\tWidth() (wid int, ok bool)\n\tPrecision() (prec int, ok bool)\n\tFlag(c int) bool\n}',
+    description:
+      "State передаётся в Format методом Formatter и даёт доступ к параметрам форматирования: Write пишет отформатированный вывод, Width и Precision возвращают заданные ширину и точность (и признак, что они указаны), а Flag проверяет, установлен ли флаг форматирования (например, int('+') или int('-')).",
+    example:
+      'type Marker int\n\n' +
+      'func (m Marker) Format(f fmt.State, verb rune) {\n' +
+      '  if width, ok := f.Width(); ok {\n' +
+      '    fmt.Fprintf(f, "width=%d ", width)\n' +
+      '  }\n' +
+      '  if prec, ok := f.Precision(); ok {\n' +
+      '    fmt.Fprintf(f, "prec=%d ", prec)\n' +
+      '  }\n' +
+      "  if f.Flag('+') {\n" +
+      '    fmt.Fprint(f, "flag=+ ")\n' +
+      '  }\n' +
+      '  f.Write([]byte("State"))\n' +
+      '}\n\n' +
+      'fmt.Printf("%+5.2v\\n", Marker(0))\n\n' +
+      '// width=5 prec=2 flag=+ State',
+    specification: 'https://pkg.go.dev/fmt#State',
+  },
+  {
+    name: 'Scanner',
+    kind: 'interface',
+    syntax:
+      'type Scanner interface {\n\tScan(state ScanState, verb rune) error\n}',
+    description:
+      'Scanner реализуется типом, у которого есть метод Scan(state ScanState, verb rune) error, который сам разбирает своё значение из ввода; получатель должен быть указателем. Метод автоматически вызывается при сканировании значения через fmt — в том числе внутри других пакетов, которые используют fmt для чтения.',
+    example:
+      'type Word string\n\n' +
+      'func (w *Word) Scan(state fmt.ScanState, verb rune) error {\n' +
+      '  tok, err := state.Token(true, nil)\n' +
+      '  if err != nil {\n' +
+      '    return err\n' +
+      '  }\n' +
+      '  *w = Word(tok)\n' +
+      '  return nil\n' +
+      '}\n\n' +
+      'var w Word\n' +
+      'fmt.Sscan("Scanner", &w)\n' +
+      'fmt.Println(w)\n\n' +
+      '// Scanner',
+    specification: 'https://pkg.go.dev/fmt#Scanner',
+  },
+  {
+    name: 'ScanState',
+    kind: 'interface',
+    syntax:
+      'type ScanState interface {\n\tReadRune() (r rune, size int, err error)\n\tUnreadRune() error\n\tSkipSpace()\n\tToken(skipSpace bool, f func(rune) bool) (token []byte, err error)\n\tWidth() (wid int, ok bool)\n\tRead(buf []byte) (n int, err error)\n}',
+    description:
+      'ScanState передаётся в Scan методом Scanner и даёт доступ к вводу: ReadRune и UnreadRune читают один символ с возможностью вернуть его обратно, SkipSpace пропускает пробелы, Token считывает подряд идущие символы, удовлетворяющие предикату f, а Width сообщает заданную ширину поля (и признак, что она указана). Read тоже есть в интерфейсе, но сама fmt его не вызывает и не рассчитана на вызов из Scan — она нужна только для реализации обёрток вокруг ScanState; при вызове из Scan вернёт ошибку.',
+    example:
+      'type Word string\n\n' +
+      'func (w *Word) Scan(state fmt.ScanState, verb rune) error {\n' +
+      '  state.SkipSpace()\n\n' +
+      '  r, _, err := state.ReadRune() // читаем первый символ\n' +
+      '  if err != nil {\n' +
+      '    return err\n' +
+      '  }\n' +
+      '  state.UnreadRune() // и возвращаем его обратно\n' +
+      '  fmt.Print("peek: ", string(r), " ")\n\n' +
+      '  if width, ok := state.Width(); ok {\n' +
+      '    fmt.Print("width: ", width, " ")\n' +
+      '  }\n\n' +
+      '  tok, err := state.Token(true, nil)\n' +
+      '  if err != nil {\n' +
+      '    return err\n' +
+      '  }\n' +
+      '  *w = Word(tok)\n' +
+      '  fmt.Println(*w)\n' +
+      '  return nil\n' +
+      '}\n\n' +
+      'var w Word\n' +
+      'fmt.Sscanf("  ScanState", "%9v", &w)\n\n' +
+      '// peek: S width: 9 ScanState',
+    specification: 'https://pkg.go.dev/fmt#ScanState',
+  },
 ];

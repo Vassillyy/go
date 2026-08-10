@@ -47,6 +47,14 @@
   color: #2c3e50;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .content {
   display: flex;
   flex-direction: column;

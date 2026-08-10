@@ -1,26 +1,42 @@
 import { type FC, useMemo } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { MethodCard } from '@/entities/method';
-import { Input } from '@/shared/ui';
+import { MethodCard, type MethodKind } from '@/entities/method';
+import { Input, Switcher } from '@/shared/ui';
 import { useFilters, useInfiniteScroll } from '@/shared/hooks';
 import { AppPaths } from '@/shared/constants/route';
 import { packageConfigs } from '../config';
 import styles from './GoPackagePage.module.css';
+
+const KIND_OPTIONS: { value: MethodKind; label: string }[] = [
+  { value: 'function', label: 'Функции' },
+  { value: 'interface', label: 'Интерфейсы' },
+];
 
 export const GoPackagePage: FC = () => {
   const { packageId = '' } = useParams();
   const location = useLocation();
   const { label } = location.state;
 
-  const { searchQuery, loadedCount, searchChange, searchReset, loadMore } =
-    useFilters();
+  const {
+    activeCategories,
+    searchQuery,
+    loadedCount,
+    filterChange,
+    searchChange,
+    searchReset,
+    loadMore,
+  } = useFilters<MethodKind>();
+
+  const activeKind = activeCategories[0] ?? 'function';
 
   const filteredMethods = useMemo(
     () =>
-      (packageConfigs[packageId] ?? []).filter((method) =>
-        method.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      (packageConfigs[packageId] ?? []).filter(
+        (method) =>
+          (method.kind ?? 'function') === activeKind &&
+          method.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
-    [packageId, searchQuery],
+    [packageId, searchQuery, activeKind],
   );
 
   const itemsToShow = filteredMethods.slice(0, loadedCount);
@@ -40,11 +56,18 @@ export const GoPackagePage: FC = () => {
       <div className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.title}>{label ?? packageId}</h1>
-          <Input
-            searchQuery={searchQuery}
-            onSearchChange={searchChange}
-            onSearchReset={searchReset}
-          />
+          <div className={styles.controls}>
+            <Input
+              searchQuery={searchQuery}
+              onSearchChange={searchChange}
+              onSearchReset={searchReset}
+            />
+            <Switcher
+              options={KIND_OPTIONS}
+              value={activeKind}
+              onChange={(kind) => filterChange([kind])}
+            />
+          </div>
         </header>
 
         <div className={styles.content}>

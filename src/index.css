@@ -58,6 +58,16 @@
   --font-input-button-clear: var(--font-weight-400) var(--font-size-13)
     var(--font-family);
 
+  /* Switcher */
+  --color-switcher-border: #a5d6a7;
+  --color-switcher-bg: #f5fff7;
+  --color-switcher-option-text: #5a8d5a;
+  --color-switcher-option-text-hover: #2e7d32;
+  --color-switcher-option-active-bg: #2ecc71;
+  --color-switcher-option-active-text: #ffffff;
+  --font-switcher-option: var(--font-weight-500) var(--font-size-14)
+    var(--font-family);
+
   /* CodeWS */
   --color-code-ws-bg: #1e1e1e;
   --color-code-ws-title-bg: #252526;
@@ -128,7 +138,6 @@
     var(--font-family);
   --shadow-method-card-syntax: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-method-card-link: 0 2px 4px rgba(77, 171, 247, 0.2);
-
 }
 
 @media (max-width: 768px) {

@@ -50,7 +50,9 @@
 }
 
 .methodSyntax {
-  width: fit-content;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: pre-wrap;
   background: var(--color-method-card-syntax-bg);
   padding: 6px 12px;
   border-radius: 4px;

@@ -134,6 +134,7 @@ export const schemeConfig: ISchemeConfig = {
         { id: 'pkg-io', label: 'io' },
         { id: 'pkg-bufio', label: 'bufio' },
         { id: 'pkg-time', label: 'time' },
+        { id: 'pkg-sort', label: 'sort' },
       ],
     },
   ],

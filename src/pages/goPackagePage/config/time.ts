@@ -14,7 +14,7 @@ export const timeMethods: IMethod[] = [
     example:
       'now := time.Now()\n' +
       'fmt.Println(now.Year() > 2000)\n\n' +
-      '// 2009-11-10 23:00:00 +0000 UTC m=+0.000000001',
+      '// true',
     specification: 'https://pkg.go.dev/time#Now',
   },
   {

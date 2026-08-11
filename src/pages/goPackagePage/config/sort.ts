@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const sortMethods: IMethod[] = [
+export const sort: IMethod[] = [
   {
     name: 'Ints',
     syntax: 'func Ints(x []int)',

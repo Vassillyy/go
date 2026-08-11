@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const strconvMethods: IMethod[] = [
+export const strconv: IMethod[] = [
   {
     name: 'Atoi',
     syntax: 'func Atoi(s string) (int, error)',

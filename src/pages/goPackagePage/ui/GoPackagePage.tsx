@@ -9,7 +9,7 @@ import styles from './GoPackagePage.module.css';
 
 const KIND_OPTIONS: { value: MethodKind; label: string }[] = [
   { value: 'function', label: 'Функции' },
-  { value: 'interface', label: 'Интерфейсы' },
+  { value: 'type', label: 'Типы' },
 ];
 
 export const GoPackagePage: FC = () => {

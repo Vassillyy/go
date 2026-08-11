@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const ioMethods: IMethod[] = [
+export const io: IMethod[] = [
   {
     name: 'Copy',
     syntax: 'func Copy(dst Writer, src Reader) (written int64, err error)',

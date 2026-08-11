@@ -1,20 +1,20 @@
 import type { IMethod } from '@/entities/method';
-import { fmtMethods } from './fmt.ts';
-import { stringsMethods } from './strings.ts';
-import { osMethods } from './os.ts';
-import { strconvMethods } from './strconv.ts';
-import { ioMethods } from './io.ts';
-import { bufioMethods } from './bufio.ts';
-import { timeMethods } from './time.ts';
-import { sortMethods } from './sort.ts';
+import { fmt } from './fmt.ts';
+import { strings } from './strings.ts';
+import { os } from './os.ts';
+import { strconv } from './strconv.ts';
+import { io } from './io.ts';
+import { bufio } from './bufio.ts';
+import { time } from './time.ts';
+import { sort } from './sort.ts';
 
 export const packageConfigs: Record<string, IMethod[]> = {
-  'pkg-fmt': fmtMethods,
-  'pkg-strings': stringsMethods,
-  'pkg-os': osMethods,
-  'pkg-strconv': strconvMethods,
-  'pkg-io': ioMethods,
-  'pkg-bufio': bufioMethods,
-  'pkg-time': timeMethods,
-  'pkg-sort': sortMethods,
+  'pkg-fmt': fmt,
+  'pkg-strings': strings,
+  'pkg-os': os,
+  'pkg-strconv': strconv,
+  'pkg-io': io,
+  'pkg-bufio': bufio,
+  'pkg-time': time,
+  'pkg-sort': sort,
 };

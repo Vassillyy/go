@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const osMethods: IMethod[] = [
+export const os: IMethod[] = [
   {
     name: 'Args',
     syntax: 'var Args []string',

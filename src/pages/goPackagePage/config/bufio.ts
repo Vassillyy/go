@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const bufioMethods: IMethod[] = [
+export const bufio: IMethod[] = [
   {
     name: 'NewReader',
     syntax: 'func NewReader(rd io.Reader) *Reader',

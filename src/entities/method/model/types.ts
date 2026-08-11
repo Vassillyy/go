@@ -1,4 +1,4 @@
-export type MethodKind = 'function' | 'interface';
+export type MethodKind = 'function' | 'type';
 
 export interface IMethod {
   name: string;

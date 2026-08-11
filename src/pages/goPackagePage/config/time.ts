@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const timeMethods: IMethod[] = [
+export const time: IMethod[] = [
   {
     name: 'Now',
     syntax: 'func Now() Time',

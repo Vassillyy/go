@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const fmtMethods: IMethod[] = [
+export const fmt: IMethod[] = [
   {
     name: 'Print',
     syntax: 'func Print(a ...any) (n int, err error)',
@@ -713,7 +713,7 @@ export const fmtMethods: IMethod[] = [
   },
   {
     name: 'Stringer',
-    kind: 'interface',
+    kind: 'type',
     syntax: 'type Stringer interface {\n\tString() string\n}',
     description:
       'Stringer реализуется типом, у которого есть метод String() string, определяющий его текстовое представление. Метод автоматически вызывается при форматировании значения через fmt (verb %v/%s) — в том числе внутри других пакетов, которые используют fmt для вывода.',
@@ -729,7 +729,7 @@ export const fmtMethods: IMethod[] = [
   },
   {
     name: 'GoStringer',
-    kind: 'interface',
+    kind: 'type',
     syntax: 'type GoStringer interface {\n\tGoString() string\n}',
     description:
       'GoStringer реализуется типом, у которого есть метод GoString() string, задающий его представление в виде Go-синтаксиса. Метод автоматически вызывается при форматировании значения через fmt (verb %#v) — в том числе внутри других пакетов, которые используют fmt для вывода.',
@@ -742,7 +742,7 @@ export const fmtMethods: IMethod[] = [
   },
   {
     name: 'Formatter',
-    kind: 'interface',
+    kind: 'type',
     syntax: 'type Formatter interface {\n\tFormat(f State, verb rune)\n}',
     description:
       'Formatter реализуется типом, у которого есть метод Format(f State, verb rune), который полностью берёт на себя вывод значения для любого verb, включая %v — метод автоматически вызывается при форматировании через fmt, в том числе внутри других пакетов, которые используют fmt для вывода. Внутри метода можно писать в f напрямую (он реализует io.Writer) или через fmt.Fprint/Fprintf(f, ...).',
@@ -763,7 +763,7 @@ export const fmtMethods: IMethod[] = [
   },
   {
     name: 'State',
-    kind: 'interface',
+    kind: 'type',
     syntax:
       'type State interface {\n\tWrite(b []byte) (n int, err error)\n\tWidth() (wid int, ok bool)\n\tPrecision() (prec int, ok bool)\n\tFlag(c int) bool\n}',
     description:
@@ -788,7 +788,7 @@ export const fmtMethods: IMethod[] = [
   },
   {
     name: 'Scanner',
-    kind: 'interface',
+    kind: 'type',
     syntax:
       'type Scanner interface {\n\tScan(state ScanState, verb rune) error\n}',
     description:
@@ -811,7 +811,7 @@ export const fmtMethods: IMethod[] = [
   },
   {
     name: 'ScanState',
-    kind: 'interface',
+    kind: 'type',
     syntax:
       'type ScanState interface {\n\tReadRune() (r rune, size int, err error)\n\tUnreadRune() error\n\tSkipSpace()\n\tToken(skipSpace bool, f func(rune) bool) (token []byte, err error)\n\tWidth() (wid int, ok bool)\n\tRead(buf []byte) (n int, err error)\n}',
     description:

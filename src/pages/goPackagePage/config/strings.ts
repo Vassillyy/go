@@ -1,6 +1,6 @@
 import type { IMethod } from '@/entities/method';
 
-export const stringsMethods: IMethod[] = [
+export const strings: IMethod[] = [
   {
     name: 'Contains',
     syntax: 'func Contains(s, substr string) bool',
@@ -639,5 +639,120 @@ export const stringsMethods: IMethod[] = [
       'fmt.Println(string(buf), n, err)\n\n' +
       '// Hello 5 <nil>',
     specification: 'https://pkg.go.dev/strings#NewReader',
+  },
+  {
+    name: 'NewReplacer',
+    syntax: 'func NewReplacer(oldnew ...string) *Replacer',
+    parameters: [
+      {
+        name: 'oldnew',
+        description: 'Чередующиеся пары old, new, old, new, ...',
+      },
+    ],
+    returns: [
+      {
+        name: '*Replacer',
+        description: 'Replacer, заменяющий все old на соответствующий new',
+      },
+    ],
+    description:
+      'NewReplacer создаёт Replacer из чередующихся пар old, new: каждое вхождение oldnew[2i] заменяется на oldnew[2i+1]. Замены выполняются за один проход по строке без пересечения совпадений, а если в одной позиции способны совпасть сразу несколько old, побеждает та пара, что раньше по порядку в oldnew. При нечётном количестве oldnew паникует.',
+    example:
+      'r1 := strings.NewReplacer("ab", "X", "a", "Y")\n' +
+      'fmt.Println(r1.Replace("abc"))\n\n' +
+      'r2 := strings.NewReplacer("a", "Y", "ab", "X")\n' +
+      'fmt.Println(r2.Replace("abc"))\n\n' +
+      '// Xc\n' +
+      '// Ybc',
+    specification: 'https://pkg.go.dev/strings#NewReplacer',
+  },
+  {
+    name: 'Builder',
+    kind: 'type',
+    syntax:
+      'type Builder struct{ ... }\n\n' +
+      'func (b *Builder) Cap() int\n' +
+      'func (b *Builder) Grow(n int)\n' +
+      'func (b *Builder) Len() int\n' +
+      'func (b *Builder) Reset()\n' +
+      'func (b *Builder) String() string\n' +
+      'func (b *Builder) Write(p []byte) (int, error)\n' +
+      'func (b *Builder) WriteByte(c byte) error\n' +
+      'func (b *Builder) WriteRune(r rune) (int, error)\n' +
+      'func (b *Builder) WriteString(s string) (int, error)',
+    description:
+      'Builder — тип для эффективной сборки строки из частей: данные копятся во внутреннем буфере без лишних промежуточных аллокаций, в отличие от конкатенации через +=. Write, WriteString, WriteByte и WriteRune дописывают данные в конец, String возвращает накопленный результат, а Len — его текущую длину в байтах; Grow заранее резервирует память под n байт, Cap возвращает текущую вместимость буфера, а Reset очищает Builder для повторного использования. Нулевое значение Builder уже готово к использованию, но копировать Builder после первой записи нельзя.',
+    example:
+      'var b strings.Builder\n' +
+      'b.Grow(16)\n' +
+      'b.WriteString("Hello, ")\n' +
+      "b.WriteByte('R')\n" +
+      "b.WriteRune('o')\n" +
+      'b.Write([]byte("man!"))\n' +
+      'fmt.Println(b.String(), b.Len(), b.Cap())\n\n' +
+      'b.Reset()\n' +
+      'fmt.Println(b.Len())\n\n' +
+      '// Hello, Roman! 13 16\n' +
+      '// 0',
+    specification: 'https://pkg.go.dev/strings#Builder',
+  },
+  {
+    name: 'Reader',
+    kind: 'type',
+    syntax:
+      'type Reader struct{ ... }\n\n' +
+      'func (r *Reader) Len() int\n' +
+      'func (r *Reader) Read(b []byte) (n int, err error)\n' +
+      'func (r *Reader) ReadAt(b []byte, off int64) (n int, err error)\n' +
+      'func (r *Reader) ReadByte() (byte, error)\n' +
+      'func (r *Reader) ReadRune() (ch rune, size int, err error)\n' +
+      'func (r *Reader) Reset(s string)\n' +
+      'func (r *Reader) Seek(offset int64, whence int) (int64, error)\n' +
+      'func (r *Reader) Size() int64\n' +
+      'func (r *Reader) UnreadByte() error\n' +
+      'func (r *Reader) UnreadRune() error\n' +
+      'func (r *Reader) WriteTo(w io.Writer) (n int64, err error)',
+    description:
+      'Reader — тип, реализующий чтение из обычной строки как io.Reader и одновременно io.ReaderAt, io.ByteReader, io.ByteScanner, io.RuneReader, io.RuneScanner, io.Seeker и io.WriterTo, без копирования строки в []byte. Read, ReadByte и ReadRune читают данные и сдвигают текущую позицию, UnreadByte и UnreadRune возвращают последний прочитанный байт или символ обратно, ReadAt читает по произвольному смещению, не трогая текущую позицию, а Seek саму позицию перемещает; WriteTo дочитывает всё оставшееся содержимое в io.Writer. Len возвращает количество ещё не прочитанных байт, а Size — размер исходной строки целиком, а Reset позволяет переиспользовать Reader для новой строки, не создавая новый объект.',
+    example:
+      'r := strings.NewReader("Hello")\n\n' +
+      'c, _ := r.ReadByte()\n' +
+      'r.UnreadByte() // возвращаем байт обратно\n\n' +
+      'ch, _, _ := r.ReadRune()\n' +
+      'r.UnreadRune() // и символ тоже\n\n' +
+      'buf := make([]byte, 2)\n' +
+      'r.Read(buf)\n\n' +
+      'at := make([]byte, 2)\n' +
+      'r.ReadAt(at, 3) // чтение по смещению не двигает позицию\n\n' +
+      'fmt.Println(string(c), string(ch), string(buf), string(at), r.Len(), r.Size())\n\n' +
+      'r.Seek(0, 0)\n' +
+      'var sb strings.Builder\n' +
+      'r.WriteTo(&sb)\n' +
+      'fmt.Println(sb.String())\n\n' +
+      'r.Reset("New")\n' +
+      'fmt.Println(r.Len())\n\n' +
+      '// H H He lo 3 5\n' +
+      '// Hello\n' +
+      '// 3',
+    specification: 'https://pkg.go.dev/strings#Reader',
+  },
+  {
+    name: 'Replacer',
+    kind: 'type',
+    syntax:
+      'type Replacer struct{ ... }\n\n' +
+      'func (r *Replacer) Replace(s string) string\n' +
+      'func (r *Replacer) WriteString(w io.Writer, s string) (n int, err error)',
+    description:
+      'Replacer — тип, хранящий набор пар «что заменить → на что» и выполняющий все замены сразу за один проход по строке; в отличие от последовательных вызовов strings.ReplaceAll, ни один участок результата не обрабатывается повторно. Replace возвращает результат новой строкой, а WriteString делает то же самое, но пишет прямо в io.Writer, не создавая промежуточную строку. Replacer безопасен для конкурентного использования из нескольких горутин.',
+    example:
+      'rep := strings.NewReplacer("<", "&lt;", ">", "&gt;")\n\n' +
+      'fmt.Println(rep.Replace("<b>"))\n\n' +
+      'var b strings.Builder\n' +
+      'rep.WriteString(&b, "<b>")\n' +
+      'fmt.Println(b.String())\n\n' +
+      '// &lt;b&gt;\n' +
+      '// &lt;b&gt;',
+    specification: 'https://pkg.go.dev/strings#Replacer',
   },
 ];

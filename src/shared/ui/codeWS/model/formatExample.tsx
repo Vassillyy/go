@@ -9,6 +9,7 @@ export const formatExample = (
 
   const lines = example.split('\n');
   const formattedLines: ReactNode[] = [];
+  let inBlockComment = false;
 
   lines.forEach((line, index) => {
     if (line === '') {
@@ -16,41 +17,85 @@ export const formatExample = (
       return;
     }
 
-    const doubleSlashMatch = line.match(/(?<!:)\/\//);
-    const doubleSlashIndex = doubleSlashMatch?.index ?? -1;
-    const htmlCommentStart = line.indexOf('<!--');
+    let rest = line;
+    const parts: { code: string; comment: string }[] = [];
 
-    let commentIndex = -1;
+    while (rest.length > 0) {
+      if (inBlockComment) {
+        const blockEnd = rest.indexOf('*/');
 
-    if (doubleSlashIndex !== -1 && htmlCommentStart !== -1) {
-      commentIndex = Math.min(doubleSlashIndex, htmlCommentStart);
-    } else if (doubleSlashIndex !== -1) {
-      commentIndex = doubleSlashIndex;
-    } else if (htmlCommentStart !== -1) {
-      commentIndex = htmlCommentStart;
+        if (blockEnd === -1) {
+          parts.push({ code: '', comment: rest });
+          rest = '';
+        } else {
+          const comment = rest.slice(0, blockEnd + 2);
+          rest = rest.slice(blockEnd + 2);
+          inBlockComment = false;
+          if (comment) parts.push({ code: '', comment });
+        }
+        continue;
+      }
+
+      const lineCommentMatch = rest.match(/(?<!:)\/\//);
+      const lineCommentIndex = lineCommentMatch?.index ?? -1;
+      const blockCommentIndex = rest.indexOf('/*');
+
+      const starts: { index: number; kind: 'line' | 'block' }[] = [];
+      if (lineCommentIndex !== -1) {
+        starts.push({ index: lineCommentIndex, kind: 'line' });
+      }
+      if (blockCommentIndex !== -1) {
+        starts.push({ index: blockCommentIndex, kind: 'block' });
+      }
+      starts.sort((a, b) => a.index - b.index);
+
+      const first = starts[0];
+
+      if (!first) {
+        parts.push({ code: rest, comment: '' });
+        rest = '';
+        continue;
+      }
+
+      if (first.index > 0) {
+        parts.push({ code: rest.slice(0, first.index), comment: '' });
+      }
+
+      if (first.kind === 'line') {
+        parts.push({ code: '', comment: rest.slice(first.index) });
+        rest = '';
+      } else {
+        const blockEnd = rest.indexOf('*/', first.index + 2);
+
+        if (blockEnd === -1) {
+          parts.push({ code: '', comment: rest.slice(first.index) });
+          inBlockComment = true;
+          rest = '';
+        } else {
+          const comment = rest.slice(first.index, blockEnd + 2);
+          parts.push({ code: '', comment });
+          rest = rest.slice(blockEnd + 2);
+        }
+      }
     }
 
-    if (commentIndex !== -1) {
-      const codePart = line.substring(0, commentIndex);
-      const commentPart = line.substring(commentIndex);
-
-      const highlightedCode = highlightCode(codePart, styles);
-
+    if (parts.length === 0) {
       formattedLines.push(
-        <div key={`line-${index}`} className={styles.exampleLine}>
-          {highlightedCode}
-          <span className={styles.comment}>{commentPart}</span>
-        </div>,
+        <div key={`line-${index}`} className={styles.exampleLine} />,
       );
-    } else {
-      const highlightedCode = highlightCode(line, styles);
-
-      formattedLines.push(
-        <div key={`line-${index}`} className={styles.exampleLine}>
-          {highlightedCode}
-        </div>,
-      );
+      return;
     }
+
+    formattedLines.push(
+      <div key={`line-${index}`} className={styles.exampleLine}>
+        {parts.map((part, partIndex) => (
+          <span key={`part-${index}-${partIndex}`}>
+            {part.code && highlightCode(part.code, styles)}
+            {part.comment && <span className={styles.comment}>{part.comment}</span>}
+          </span>
+        ))}
+      </div>,
+    );
   });
 
   return formattedLines;

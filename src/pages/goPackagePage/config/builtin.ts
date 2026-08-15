@@ -141,7 +141,7 @@ export const builtin: IMethod[] = [
       {
         name: 'int',
         description:
-          'Число скопированных элементов, равное меньшей из длин dst и src',
+          'Число скопированных элементов',
       },
     ],
     description: 'copy копирует элементы из src в dst.',

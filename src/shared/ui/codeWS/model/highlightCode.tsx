@@ -1,5 +1,109 @@
 import type { ReactNode } from 'react';
 
+const CONTROL_FLOW = new Set([
+  'if',
+  'else',
+  'for',
+  'range',
+  'switch',
+  'case',
+  'default',
+  'select',
+  'goto',
+  'fallthrough',
+  'break',
+  'continue',
+  'return',
+  'defer',
+  'go',
+]);
+
+const DECLARATION = new Set([
+  'func',
+  'var',
+  'const',
+  'type',
+  'package',
+  'import',
+  'struct',
+  'interface',
+  'map',
+  'chan',
+]);
+
+const BUILTIN_FUNCS = new Set([
+  'append',
+  'cap',
+  'clear',
+  'close',
+  'complex',
+  'copy',
+  'delete',
+  'imag',
+  'len',
+  'make',
+  'max',
+  'min',
+  'new',
+  'panic',
+  'print',
+  'println',
+  'real',
+  'recover',
+]);
+
+const CONSTANTS = new Set(['true', 'false', 'nil', 'iota']);
+
+const PACKAGES = new Set([
+  'bufio',
+  'bytes',
+  'context',
+  'errors',
+  'flag',
+  'fmt',
+  'io',
+  'json',
+  'log',
+  'math',
+  'net',
+  'os',
+  'path',
+  'reflect',
+  'regexp',
+  'sort',
+  'strconv',
+  'strings',
+  'sync',
+  'time',
+]);
+
+const BUILTIN_TYPES = new Set([
+  'any',
+  'bool',
+  'byte',
+  'comparable',
+  'complex64',
+  'complex128',
+  'error',
+  'float32',
+  'float64',
+  'int',
+  'int8',
+  'int16',
+  'int32',
+  'int64',
+  'rune',
+  'string',
+  'uint',
+  'uint8',
+  'uint16',
+  'uint32',
+  'uint64',
+  'uintptr',
+]);
+
+const NUMBER = /^(0x[\da-fA-F]+|\d+(\.\d+)?([eE][+-]?\d+)?)$/;
+
 export const highlightCode = (
   code: string,
   styles: Record<string, string>,
@@ -10,38 +114,6 @@ export const highlightCode = (
   let prevTokenWasDot = false;
 
   while (i < code.length) {
-    if (code[i] === '<') {
-      let j = i + 1;
-      let hasSlash = false;
-
-      if (j < code.length && code[j] === '/') {
-        hasSlash = true;
-        j++;
-      }
-
-      const nameStart = j;
-      while (j < code.length && /[a-zA-Z0-9-]/.test(code[j])) j++;
-
-      if (j > nameStart) {
-        parts.push(<span key={`char-${keyCounter++}`}>{code[i]}</span>);
-        i++;
-
-        if (hasSlash) {
-          parts.push(<span key={`char-${keyCounter++}`}>/</span>);
-          i++;
-        }
-
-        parts.push(
-          <span key={`tag-${keyCounter++}`} className={styles.tag}>
-            {code.slice(i, j)}
-          </span>
-        );
-        i = j;
-        prevTokenWasDot = false;
-        continue;
-      }
-    }
-
     if (/\s/.test(code[i])) {
       let j = i;
       while (j < code.length && /\s/.test(code[j])) j++;
@@ -81,83 +153,49 @@ export const highlightCode = (
     if (j > i) {
       const word = code.slice(i, j);
 
-      if (
-        /^(if|else|for|while|do|switch|case|break|continue|return|try|catch|finally|throw)$/.test(
-          word,
-        )
-      ) {
+      if (CONTROL_FLOW.has(word)) {
         parts.push(
           <span key={`ctrl-${keyCounter++}`} className={styles.control}>
             {word}
           </span>,
         );
-      } else if (/^(let|const|var|function|yield|await|async)$/.test(word)) {
+      } else if (DECLARATION.has(word)) {
         parts.push(
           <span key={`decl-${keyCounter++}`} className={styles.declaration}>
             {word}
           </span>,
         );
-      } else if (
-        /^(type|interface|enum|namespace|module|declare|implements|extends|infer|keyof|typeof|instanceof|readonly|Uppercase|Lowercase|Capitalize|Uncapitalize|Partial|Required|Readonly|Pick|Omit|Record|Exclude|Extract|NonNullable|Parameters|ReturnType|ConstructorParameters|InstanceType|Awaited|NoInfer)$/.test(
-          word,
-        )
-      ) {
+      } else if (BUILTIN_FUNCS.has(word)) {
         parts.push(
-          <span key={`ts-${keyCounter++}`} className={styles.tsKeyword}>
+          <span key={`builtin-${keyCounter++}`} className={styles.builtin}>
             {word}
           </span>,
         );
-      } else if (
-        /^(string|number|boolean|any|void|delete|in|never|unknown|object|symbol|bigint|null|undefined)$/.test(
-          word,
-        )
-      ) {
+      } else if (CONSTANTS.has(word)) {
+        parts.push(
+          <span key={`const-${keyCounter++}`} className={styles.constant}>
+            {word}
+          </span>,
+        );
+      } else if (PACKAGES.has(word)) {
+        parts.push(
+          <span key={`pkg-${keyCounter++}`} className={styles.package}>
+            {word}
+          </span>,
+        );
+      } else if (BUILTIN_TYPES.has(word)) {
         parts.push(
           <span key={`type-${keyCounter++}`} className={styles.type}>
             {word}
           </span>,
         );
-      } else if (
-        /^(class|constructor|super|public|private|protected|static|new)$/.test(
-          word,
-        )
-      ) {
-        parts.push(
-          <span key={`class-${keyCounter++}`} className={styles.classKeyword}>
-            {word}
-          </span>,
-        );
-      } else if (
-        /^(import|export|from|as|default|require|module)$/.test(word)
-      ) {
-        parts.push(
-          <span key={`mod-${keyCounter++}`} className={styles.module}>
-            {word}
-          </span>,
-        );
-      } else if (/^(true|false)$/.test(word)) {
-        parts.push(
-          <span key={`bool-${keyCounter++}`} className={styles.boolean}>
-            {word}
-          </span>,
-        );
-      } else if (prevTokenWasDot && /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(word)) {
+      } else if (prevTokenWasDot) {
         parts.push(
           <span key={`method-${keyCounter++}`} className={styles.method}>
             {word}
           </span>,
         );
-      } else if (
-        /^(setTimeout|setInterval|clearTimeout|clearInterval|Promise|then|catch|finally|console|JSON|Math|Number|String|Symbol|Function|Boolean|Array|Date|Object|RegExp|Error|Map|Set|WeakMap|WeakSet|Proxy|Reflect)$/.test(
-          word,
-        )
-      ) {
-        parts.push(
-          <span key={`global-${keyCounter++}`} className={styles.global}>
-            {word}
-          </span>,
-        );
-      } else if (/^(Infinity|-Infinity|NaN|\d+(\.\d+)?)$/.test(word)) {
+      } else if (NUMBER.test(word)) {
         parts.push(
           <span key={`num-${keyCounter++}`} className={styles.number}>
             {word}

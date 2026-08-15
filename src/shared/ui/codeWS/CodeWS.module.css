@@ -51,20 +51,20 @@
   color: var(--color-code-ws-code-declaration);
 }
 
-.code .tsKeyword {
-  color: var(--color-code-ws-code-tsKeyword);
+.code .builtin {
+  color: var(--color-code-ws-code-builtin);
+}
+
+.code .constant {
+  color: var(--color-code-ws-code-constant);
 }
 
 .code .type {
   color: var(--color-code-ws-code-type);
 }
 
-.code .classKeyword {
-  color: var(--color-code-ws-code-classKeyword);
-}
-
-.code .module {
-  color: var(--color-code-ws-code-module);
+.code .package {
+  color: var(--color-code-ws-code-package);
 }
 
 .code .method {
@@ -79,29 +79,15 @@
   color: var(--color-code-ws-code-number);
 }
 
-.code .global {
-  color: var(--color-code-ws-code-global);
-}
-
 .code .comment {
   color: var(--color-code-ws-code-comment);
   font-style: italic;
 }
 
-.code .boolean {
-  color: var(--color-code-ws-code-boolean);
-}
-
-.code .tag {
-  color: var(--color-code-ws-code-tag);
-}
-
 .code
-  span:not(.control):not(.declaration):not(.tsKeyword):not(.type):not(
-    .classKeyword
-  ):not(.module):not(.method):not(.string):not(.number):not(.comment):not(
-    .global
-  ):not(.boolean):not(.tag) {
+  span:not(.control):not(.declaration):not(.builtin):not(.constant):not(
+    .type
+  ):not(.package):not(.method):not(.string):not(.number):not(.comment) {
   color: var(--color-code-ws-code-other);
 }
 

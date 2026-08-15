@@ -2,6 +2,7 @@ import { type FC, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { useDragToScroll } from '@/shared/hooks';
 import { schemeConfig } from '../config';
 import { buildScheme } from '../model/buildScheme';
 import type { SchemeFlowNode } from '../model/types';
@@ -60,13 +61,28 @@ export const GoSchemePage: FC = () => {
     setHoveredNodeId(null);
   };
 
+  const {
+    onPointerDown,
+    onPointerMove,
+    onPointerUp,
+    onPointerCancel,
+    onClickCapture,
+  } = useDragToScroll();
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
         <h1 className={styles.title}>Схема Go</h1>
       </header>
 
-      <div className={styles.canvas}>
+      <div
+        className={styles.canvas}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
+        onClickCapture={onClickCapture}
+      >
         <div className={styles.diagram} style={{ width, height }}>
           <ReactFlow
             nodes={nodes}

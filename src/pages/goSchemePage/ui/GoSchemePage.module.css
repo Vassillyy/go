@@ -31,10 +31,16 @@
   background: #ffffff;
   scrollbar-width: thin;
   scrollbar-color: #c8e6c9 #f5fff7;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .diagram {
   margin: 0 auto;
+}
+
+.diagram :global(.react-flow__pane) {
+  touch-action: pan-x pan-y;
 }
 
 @media (max-width: 768px) {

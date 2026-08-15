@@ -398,6 +398,137 @@ export const os: IMethod[] = [
     specification: 'https://pkg.go.dev/os#Rename',
   },
   {
+    name: 'Stat',
+    syntax: 'func Stat(name string) (FileInfo, error)',
+    parameters: [
+      {
+        name: 'name',
+        description: 'Путь к файлу или директории',
+      },
+    ],
+    returns: [
+      {
+        name: 'FileInfo',
+        description: 'Метаданные файла',
+      },
+      {
+        name: 'error',
+        description: 'Ошибка, обычно *PathError, если файл не найден',
+      },
+    ],
+    description:
+      'Stat возвращает FileInfo с метаданными файла name. Если name — символическая ссылка, Stat переходит по ней и возвращает информацию о файле, на который она указывает.',
+    example:
+      'os.WriteFile("demo.txt", []byte("Hello"), 0644)\n' +
+      'defer os.Remove("demo.txt")\n\n' +
+      'info, err := os.Stat("demo.txt")\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'fmt.Println(info.Name(), info.Size(), info.IsDir())\n\n' +
+      '// demo.txt 5 false',
+    specification: 'https://pkg.go.dev/os#Stat',
+  },
+  {
+    name: 'Lstat',
+    syntax: 'func Lstat(name string) (FileInfo, error)',
+    parameters: [
+      {
+        name: 'name',
+        description: 'Путь к файлу или директории',
+      },
+    ],
+    returns: [
+      {
+        name: 'FileInfo',
+        description: 'Метаданные файла',
+      },
+      {
+        name: 'error',
+        description: 'Ошибка, обычно *PathError, если файл не найден',
+      },
+    ],
+    description:
+      'Lstat возвращает FileInfo с метаданными файла name. В отличие от Stat, если name — символическая ссылка, Lstat не переходит по ней, а возвращает информацию о самой ссылке.',
+    example:
+      'os.WriteFile("target.txt", []byte("Hello"), 0644)\n' +
+      'defer os.Remove("target.txt")\n' +
+      'os.Symlink("target.txt", "link.txt")\n' +
+      'defer os.Remove("link.txt")\n\n' +
+      'info, _ := os.Stat("link.txt")\n' +
+      'linfo, _ := os.Lstat("link.txt")\n' +
+      'fmt.Println(info.Mode()&os.ModeSymlink != 0, linfo.Mode()&os.ModeSymlink != 0)\n\n' +
+      '// false true',
+    specification: 'https://pkg.go.dev/os#Lstat',
+  },
+  {
+    name: 'ReadDir',
+    syntax: 'func ReadDir(name string) ([]DirEntry, error)',
+    parameters: [
+      {
+        name: 'name',
+        description: 'Путь к директории',
+      },
+    ],
+    returns: [
+      {
+        name: '[]DirEntry',
+        description: 'Записи директории, отсортированные по имени',
+      },
+      {
+        name: 'error',
+        description: 'Ошибка чтения директории',
+      },
+    ],
+    description:
+      'ReadDir читает директорию name и возвращает её содержимое в виде среза DirEntry, отсортированного по имени файла. Если во время чтения произошла ошибка, ReadDir возвращает записи, которые успел прочитать до неё, вместе с самой ошибкой.',
+    example:
+      'os.Mkdir("demo_dir", 0755)\n' +
+      'defer os.RemoveAll("demo_dir")\n' +
+      'os.WriteFile("demo_dir/a.txt", []byte("x"), 0644)\n' +
+      'os.WriteFile("demo_dir/b.txt", []byte("y"), 0644)\n\n' +
+      'entries, err := os.ReadDir("demo_dir")\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'for _, e := range entries {\n' +
+      '  fmt.Println(e.Name())\n' +
+      '}\n\n' +
+      '// a.txt\n' +
+      '// b.txt',
+    specification: 'https://pkg.go.dev/os#ReadDir',
+  },
+  {
+    name: 'Symlink',
+    syntax: 'func Symlink(oldname, newname string) error',
+    parameters: [
+      {
+        name: 'oldname',
+        description: 'Путь, на который будет указывать ссылка',
+      },
+      {
+        name: 'newname',
+        description: 'Путь создаваемой символической ссылки',
+      },
+    ],
+    returns: [
+      {
+        name: 'error',
+        description: 'Ошибка, обычно *LinkError, если создать ссылку не удалось',
+      },
+    ],
+    description:
+      'Symlink создаёт newname как символическую ссылку на oldname. Существование oldname на момент создания ссылки не проверяется — ссылка может указывать и на несуществующий путь.',
+    example:
+      'os.WriteFile("target.txt", []byte("Hello"), 0644)\n' +
+      'defer os.Remove("target.txt")\n\n' +
+      'err := os.Symlink("target.txt", "link.txt")\n' +
+      'defer os.Remove("link.txt")\n' +
+      'fmt.Println(err)\n\n' +
+      '// <nil>',
+    specification: 'https://pkg.go.dev/os#Symlink',
+  },
+  {
     name: 'Getwd',
     syntax: 'func Getwd() (dir string, err error)',
     returns: [
@@ -416,5 +547,430 @@ export const os: IMethod[] = [
       'fmt.Println(dir, err)\n\n' +
       '// /home/roman/project <nil>',
     specification: 'https://pkg.go.dev/os#Getwd',
+  },
+  {
+    name: 'OpenRoot',
+    syntax: 'func OpenRoot(name string) (*Root, error)',
+    parameters: [
+      {
+        name: 'name',
+        description: 'Путь к директории, которая станет корнем',
+      },
+    ],
+    returns: [
+      {
+        name: '*Root',
+        description: 'Root, ограничивающий операции директорией name',
+      },
+      {
+        name: 'error',
+        description: 'Ошибка, если директорию не удалось открыть',
+      },
+    ],
+    description:
+      'OpenRoot открывает директорию name и возвращает Root — далее все файловые операции через него ограничены этой директорией и её поддеревом, попытки выйти за её пределы завершаются ошибкой.',
+    example:
+      'root, err := os.OpenRoot("sandbox")\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'fmt.Println(root.Name())\n' +
+      'root.Close()\n\n' +
+      '// sandbox',
+    specification: 'https://pkg.go.dev/os#OpenRoot',
+  },
+  {
+    name: 'File',
+    kind: 'type',
+    syntax:
+      'type File struct{ ... }\n\n' +
+      'func (f *File) Chmod(mode FileMode) error\n' +
+      'func (f *File) Close() error\n' +
+      'func (f *File) Name() string\n' +
+      'func (f *File) Read(b []byte) (n int, err error)\n' +
+      'func (f *File) ReadAt(b []byte, off int64) (n int, err error)\n' +
+      'func (f *File) ReadDir(n int) ([]DirEntry, error)\n' +
+      'func (f *File) Seek(offset int64, whence int) (ret int64, err error)\n' +
+      'func (f *File) Stat() (FileInfo, error)\n' +
+      'func (f *File) Sync() error\n' +
+      'func (f *File) Truncate(size int64) error\n' +
+      'func (f *File) Write(b []byte) (n int, err error)\n' +
+      'func (f *File) WriteAt(b []byte, off int64) (n int, err error)\n' +
+      'func (f *File) WriteString(s string) (n int, err error)',
+    description:
+      'File — тип, представляющий открытый файловый дескриптор; создаётся функциями Open, Create, OpenFile, CreateTemp, NewFile или OpenInRoot. Доступны следующие методы:\n' +
+      'Write и WriteString пишут данные, сдвигая текущую позицию.\n' +
+      'WriteAt пишет по явному смещению, не трогая текущую позицию.\n' +
+      'Read читает данные, тоже сдвигая текущую позицию.\n' +
+      'ReadAt читает по явному смещению, не трогая текущую позицию.\n' +
+      'Seek перемещает текущую позицию чтения-записи.\n' +
+      'Name возвращает исходное имя файла.\n' +
+      'Stat возвращает FileInfo с метаданными.\n' +
+      'Chmod меняет права доступа файла.\n' +
+      'Sync сбрасывает буферизованные операционной системой данные на диск.\n' +
+      'ReadDir читает содержимое директории, если File открыт как директория.\n' +
+      'Truncate обрезает файл до заданного размера.\n' +
+      'Close закрывает дескриптор.',
+    example:
+      'f, _ := os.Create("demo.txt")\n' +
+      'f.WriteString("Hello, ")\n' +
+      'f.Write([]byte("Roman!"))\n' +
+      'fmt.Println(f.Name())\n\n' +
+      'f.WriteAt([]byte("r"), 12)\n' +
+      'f.Chmod(0644)\n' +
+      'f.Sync()\n\n' +
+      'f.Seek(0, 0)\n' +
+      'buf := make([]byte, 5)\n' +
+      'f.Read(buf)\n' +
+      'fmt.Println(string(buf))\n\n' +
+      'at := make([]byte, 1)\n' +
+      'f.ReadAt(at, 12)\n' +
+      'fmt.Println(string(at))\n\n' +
+      'info, _ := f.Stat()\n' +
+      'fmt.Println(info.Size())\n\n' +
+      'f.Truncate(5)\n' +
+      'f.Close()\n' +
+      'os.Remove("demo.txt")\n\n' +
+      'os.Mkdir("demo_dir", 0755)\n' +
+      'defer os.RemoveAll("demo_dir")\n' +
+      'os.WriteFile("demo_dir/a.txt", []byte("x"), 0644)\n' +
+      'dir, _ := os.Open("demo_dir")\n' +
+      'entries, _ := dir.ReadDir(-1)\n' +
+      'fmt.Println(len(entries), entries[0].Name())\n' +
+      'dir.Close()\n\n' +
+      '// demo.txt\n' +
+      '// Hello\n' +
+      '// r\n' +
+      '// 13\n' +
+      '// 1 a.txt',
+    specification: 'https://pkg.go.dev/os#File',
+  },
+  {
+    name: 'FileInfo',
+    kind: 'type',
+    syntax:
+      'type FileInfo = fs.FileInfo\n\n' +
+      'type FileInfo interface {\n' +
+      '\tName() string\n' +
+      '\tSize() int64\n' +
+      '\tMode() FileMode\n' +
+      '\tModTime() time.Time\n' +
+      '\tIsDir() bool\n' +
+      '\tSys() any\n' +
+      '}',
+    description:
+      'FileInfo — интерфейс с метаданными о файле, возвращаемый функциями Stat, Lstat и методом File.Stat. Доступны следующие методы:\n' +
+      'Name возвращает базовое имя файла без пути.\n' +
+      'Size возвращает размер в байтах.\n' +
+      'Mode возвращает биты режима и прав доступа.\n' +
+      'ModTime возвращает время последнего изменения.\n' +
+      'IsDir — сокращение для Mode().IsDir().\n' +
+      'Sys хранит платформо-зависимые исходные данные (например, *syscall.Stat_t на Unix) и может быть nil.',
+    example:
+      'os.WriteFile("demo.txt", []byte("Hello"), 0644)\n' +
+      'defer os.Remove("demo.txt")\n\n' +
+      'info, err := os.Stat("demo.txt")\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'fmt.Println(info.Name(), info.Size(), info.Mode(), info.IsDir())\n' +
+      'fmt.Println(info.ModTime().IsZero(), info.Sys() != nil)\n\n' +
+      '// demo.txt 5 -rw-r--r-- false\n' +
+      '// false true',
+    specification: 'https://pkg.go.dev/os#FileInfo',
+  },
+  {
+    name: 'DirEntry',
+    kind: 'type',
+    syntax:
+      'type DirEntry = fs.DirEntry\n\n' +
+      'type DirEntry interface {\n' +
+      '\tName() string\n' +
+      '\tIsDir() bool\n' +
+      '\tType() FileMode\n' +
+      '\tInfo() (FileInfo, error)\n' +
+      '}',
+    description:
+      'DirEntry — интерфейс с записью о файле внутри директории, возвращаемый функцией ReadDir и методом File.ReadDir; экономичнее полного Stat на каждый файл, потому что Name, IsDir и Type не требуют лишнего системного вызова. Доступны следующие методы:\n' +
+      'Name возвращает имя файла без пути.\n' +
+      'IsDir сообщает, является ли запись директорией.\n' +
+      'Type возвращает часть битов режима — тип файла без прав доступа.\n' +
+      'Info запрашивает полный FileInfo и может завершиться ошибкой, если файл к этому моменту удалён или переименован.',
+    example:
+      'os.Mkdir("demo_dir", 0755)\n' +
+      'defer os.RemoveAll("demo_dir")\n' +
+      'os.WriteFile("demo_dir/a.txt", []byte("x"), 0644)\n\n' +
+      'entries, err := os.ReadDir("demo_dir")\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'for _, e := range entries {\n' +
+      '  info, _ := e.Info()\n' +
+      '  fmt.Println(e.Name(), e.IsDir(), e.Type(), info.Size())\n' +
+      '}\n\n' +
+      '// a.txt false ---------- 1',
+    specification: 'https://pkg.go.dev/os#DirEntry',
+  },
+  {
+    name: 'FileMode',
+    kind: 'type',
+    syntax:
+      'type FileMode uint32\n\n' +
+      'func (m FileMode) IsDir() bool\n' +
+      'func (m FileMode) IsRegular() bool\n' +
+      'func (m FileMode) Perm() FileMode\n' +
+      'func (m FileMode) String() string\n' +
+      'func (m FileMode) Type() FileMode',
+    description:
+      'FileMode — тип для битов режима файла и прав доступа поверх uint32, возвращаемый методом FileInfo.Mode; старшие биты отвечают за особые свойства файла (например, ModeDir для директорий), а младшие 9 бит — за обычные Unix-права rwxrwxrwx. Доступны следующие методы:\n' +
+      'IsDir сообщает, является ли файл директорией.\n' +
+      'IsRegular сообщает, является ли файл обычным (не директорией, не устройством и т. п.).\n' +
+      'Perm возвращает только биты прав доступа без служебных флагов.\n' +
+      'Type возвращает только биты типа файла, без прав.\n' +
+      'String форматирует режим в привычном виде вроде drwxr-xr-x.',
+    example:
+      'os.Mkdir("demo_dir", 0755)\n' +
+      'defer os.RemoveAll("demo_dir")\n\n' +
+      'info, _ := os.Stat("demo_dir")\n' +
+      'm := info.Mode()\n' +
+      'fmt.Println(m.String(), m.IsDir(), m.IsRegular(), m.Perm(), m.Type())\n\n' +
+      '// drwxr-xr-x true false -rwxr-xr-x d---------',
+    specification: 'https://pkg.go.dev/os#FileMode',
+  },
+  {
+    name: 'LinkError',
+    kind: 'type',
+    syntax:
+      'type LinkError struct {\n' +
+      '\tOp  string\n' +
+      '\tOld string\n' +
+      '\tNew string\n' +
+      '\tErr error\n' +
+      '}\n\n' +
+      'func (e *LinkError) Error() string\n' +
+      'func (e *LinkError) Unwrap() error',
+    description:
+      'LinkError описывает ошибку операций Link, Symlink или Rename: Op — имя операции («link», «symlink» или «rename»), Old и New — пути, участвовавшие в вызове, а Err — исходная системная ошибка. Доступны следующие методы:\n' +
+      'Error форматирует Op, Old, New и Err в одну строку.\n' +
+      'Unwrap возвращает Err, что позволяет проверить исходную ошибку через errors.Is или errors.As.',
+    example:
+      'err := os.Rename("no_such_file.txt", "target.txt")\n' +
+      'fmt.Println(err)\n\n' +
+      'var linkErr *os.LinkError\n' +
+      'if errors.As(err, &linkErr) {\n' +
+      '  fmt.Println(linkErr.Op, linkErr.Old, linkErr.New)\n' +
+      '  fmt.Println(linkErr.Unwrap())\n' +
+      '}\n\n' +
+      '// rename no_such_file.txt target.txt: no such file or directory\n' +
+      '// rename no_such_file.txt target.txt\n' +
+      '// no such file or directory',
+    specification: 'https://pkg.go.dev/os#LinkError',
+  },
+  {
+    name: 'SyscallError',
+    kind: 'type',
+    syntax:
+      'type SyscallError struct {\n' +
+      '\tSyscall string\n' +
+      '\tErr     error\n' +
+      '}\n\n' +
+      'func (e *SyscallError) Error() string\n' +
+      'func (e *SyscallError) Timeout() bool\n' +
+      'func (e *SyscallError) Unwrap() error',
+    description:
+      'SyscallError оборачивает ошибку конкретного системного вызова: Syscall — его имя (например, «read» или «write»), а Err — исходная ошибка ОС. Доступны следующие методы:\n' +
+      'Error форматирует Syscall и Err в одну строку.\n' +
+      'Timeout сообщает, была ли ошибка таймаутом.\n' +
+      'Unwrap возвращает Err для проверки через errors.Is или errors.As.',
+    example:
+      'err := &os.SyscallError{Syscall: "read", Err: syscall.EINVAL}\n' +
+      'fmt.Println(err.Error(), err.Timeout())\n' +
+      'fmt.Println(err.Unwrap())\n\n' +
+      '// read: invalid argument false\n' +
+      '// invalid argument',
+    specification: 'https://pkg.go.dev/os#SyscallError',
+  },
+  {
+    name: 'Signal',
+    kind: 'type',
+    syntax:
+      'type Signal interface {\n' +
+      '\tString() string\n' +
+      '\tSignal() // отличает Signal от прочих Stringer\n' +
+      '}',
+    description:
+      'Signal — интерфейс сигнала операционной системы; готовые значения — os.Interrupt (аналог Ctrl+C) и os.Kill (принудительное завершение), а на Unix их реальной реализацией выступает syscall.Signal. Доступны следующие методы:\n' +
+      'String возвращает читаемое имя сигнала.\n' +
+      'Signal — пустой метод без собственной логики, нужен только для того, чтобы отличать Signal от произвольных типов с методом String — обычных Stringer.',
+    example:
+      'var s os.Signal = os.Interrupt\n' +
+      'fmt.Println(s.String())\n' +
+      's.Signal() // ничего не делает — метод-маркер\n\n' +
+      '// interrupt',
+    specification: 'https://pkg.go.dev/os#Signal',
+  },
+  {
+    name: 'ProcAttr',
+    kind: 'type',
+    syntax:
+      'type ProcAttr struct {\n' +
+      '\tDir   string\n' +
+      '\tEnv   []string\n' +
+      '\tFiles []*File\n' +
+      '\tSys   *syscall.SysProcAttr\n' +
+      '}',
+    description:
+      'ProcAttr — набор атрибутов для запуска нового процесса функцией StartProcess. Доступны следующие поля:\n' +
+      'Dir задаёт рабочую директорию нового процесса, если не пусто.\n' +
+      'Env задаёт его переменные окружения; если nil, используется Environ.\n' +
+      'Files — файловые дескрипторы, которые процесс унаследует: первые три соответствуют stdin, stdout и stderr, а nil-элемент означает закрытый дескриптор.\n' +
+      'Sys содержит платформо-зависимые атрибуты создания процесса и не переносим между операционными системами.',
+    example:
+      'out, _ := os.Create("out.txt")\n' +
+      'defer os.Remove("out.txt")\n\n' +
+      'attr := &os.ProcAttr{\n' +
+      '  Env:   []string{"GREETING=Hello, Roman!"},\n' +
+      '  Files: []*os.File{os.Stdin, out, os.Stderr},\n' +
+      '}\n' +
+      'p, err := os.StartProcess("/bin/sh", []string{"sh", "-c", "echo $GREETING"}, attr)\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'p.Wait()\n' +
+      'out.Close()\n\n' +
+      'data, _ := os.ReadFile("out.txt")\n' +
+      'fmt.Println(strings.TrimSpace(string(data)))\n\n' +
+      '// Hello, Roman!',
+    specification: 'https://pkg.go.dev/os#ProcAttr',
+  },
+  {
+    name: 'Process',
+    kind: 'type',
+    syntax:
+      'type Process struct {\n' +
+      '\tPid int\n' +
+      '\t// Has unexported fields.\n' +
+      '}\n\n' +
+      'func (p *Process) Kill() error\n' +
+      'func (p *Process) Signal(sig Signal) error\n' +
+      'func (p *Process) Wait() (*ProcessState, error)',
+    description:
+      'Process хранит информацию о процессе, запущенном функцией StartProcess или найденном через FindProcess; поле Pid — его идентификатор. Доступны следующие методы:\n' +
+      'Signal отправляет процессу произвольный сигнал (на Windows поддерживается только Kill).\n' +
+      'Kill принудительно завершает процесс — по сути сокращение для Signal(Kill).\n' +
+      'Wait блокируется до завершения процесса и возвращает ProcessState.',
+    example:
+      'p, err := os.StartProcess("/bin/sleep", []string{"sleep", "5"}, &os.ProcAttr{\n' +
+      '  Files: []*os.File{os.Stdin, os.Stdout, os.Stderr},\n' +
+      '})\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'fmt.Println(p.Pid > 0)\n\n' +
+      'err = p.Signal(os.Interrupt)\n' +
+      'fmt.Println(err == nil)\n\n' +
+      'p.Kill()\n' +
+      'state, _ := p.Wait()\n' +
+      'fmt.Println(state.Exited()) // false — процесс завершён сигналом, а не штатно\n\n' +
+      '// true\n' +
+      '// true\n' +
+      '// false',
+    specification: 'https://pkg.go.dev/os#Process',
+  },
+  {
+    name: 'ProcessState',
+    kind: 'type',
+    syntax:
+      'type ProcessState struct{ ... }\n\n' +
+      'func (p *ProcessState) ExitCode() int\n' +
+      'func (p *ProcessState) Exited() bool\n' +
+      'func (p *ProcessState) Pid() int\n' +
+      'func (p *ProcessState) String() string\n' +
+      'func (p *ProcessState) Success() bool\n' +
+      'func (p *ProcessState) SystemTime() time.Duration\n' +
+      'func (p *ProcessState) UserTime() time.Duration',
+    description:
+      'ProcessState хранит информацию о завершённом процессе, возвращаемую методом Process.Wait. Доступны следующие методы:\n' +
+      'Pid возвращает идентификатор процесса.\n' +
+      'Exited сообщает, завершился ли процесс штатно (false, если его завершил сигнал).\n' +
+      'ExitCode возвращает код завершения (-1, если Exited вернул false).\n' +
+      'Success — сокращение для ExitCode() == 0.\n' +
+      'SystemTime и UserTime возвращают время, потраченное процессом в режиме ядра и пользователя соответственно.\n' +
+      'String форматирует состояние в короткую строку вроде «exit status 0».',
+    example:
+      'devNull, _ := os.OpenFile(os.DevNull, os.O_WRONLY, 0)\n' +
+      'defer devNull.Close()\n\n' +
+      'p, err := os.StartProcess("/bin/echo", []string{"echo", "hi"}, &os.ProcAttr{\n' +
+      '  Files: []*os.File{os.Stdin, devNull, os.Stderr},\n' +
+      '})\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'state, err := p.Wait()\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'fmt.Println(state.Pid() > 0, state.Exited(), state.Success(), state.ExitCode())\n' +
+      'fmt.Println(state.String())\n' +
+      'fmt.Println(state.SystemTime() >= 0, state.UserTime() >= 0)\n\n' +
+      '// true true true 0\n' +
+      '// exit status 0\n' +
+      '// true true',
+    specification: 'https://pkg.go.dev/os#ProcessState',
+  },
+  {
+    name: 'Root',
+    kind: 'type',
+    syntax:
+      'type Root struct{ ... }\n\n' +
+      'func (r *Root) Close() error\n' +
+      'func (r *Root) Create(name string) (*File, error)\n' +
+      'func (r *Root) Mkdir(name string, perm FileMode) error\n' +
+      'func (r *Root) Name() string\n' +
+      'func (r *Root) Open(name string) (*File, error)\n' +
+      'func (r *Root) ReadFile(name string) ([]byte, error)\n' +
+      'func (r *Root) Remove(name string) error\n' +
+      'func (r *Root) Rename(oldname, newname string) error\n' +
+      'func (r *Root) Stat(name string) (FileInfo, error)\n' +
+      'func (r *Root) WriteFile(name string, data []byte, perm FileMode) error',
+    description:
+      'Root — тип, ограничивающий файловые операции одной директорией и её поддеревом: попытка выйти за её пределы (например, через «../») завершается ошибкой, что делает Root удобным для безопасной работы с ненадёжными путями. Создаётся функцией OpenRoot, а методы дублируют одноимённые пакетные функции, но выполняют их относительно корня. Доступны следующие методы:\n' +
+      'Name возвращает путь к директории-корню.\n' +
+      'Create и Open создают и открывают файл относительно корня.\n' +
+      'WriteFile и ReadFile пишут и читают файл целиком за один вызов.\n' +
+      'Mkdir создаёт директорию.\n' +
+      'Stat возвращает FileInfo с метаданными.\n' +
+      'Rename переименовывает или перемещает файл.\n' +
+      'Remove удаляет файл или пустую директорию.\n' +
+      'Close закрывает Root и делает дальнейшие вызовы недопустимыми.',
+    example:
+      'os.Mkdir("sandbox", 0755)\n' +
+      'defer os.RemoveAll("sandbox")\n\n' +
+      'root, err := os.OpenRoot("sandbox")\n' +
+      'if err != nil {\n' +
+      '  panic(err)\n' +
+      '}\n' +
+      'defer root.Close()\n\n' +
+      'fmt.Println(root.Name())\n\n' +
+      'root.Mkdir("sub", 0755)\n\n' +
+      'f, _ := root.Create("sub/a.txt")\n' +
+      'f.Close()\n' +
+      'root.WriteFile("sub/a.txt", []byte("Hello, Root!"), 0644)\n\n' +
+      'data, _ := root.ReadFile("sub/a.txt")\n' +
+      'fmt.Println(string(data))\n\n' +
+      '_, err = root.Open("../secret.txt")\n' +
+      'fmt.Println(err != nil) // выход за пределы sandbox запрещён\n\n' +
+      'info, _ := root.Stat("sub/a.txt")\n' +
+      'fmt.Println(info.Size())\n\n' +
+      'root.Rename("sub/a.txt", "sub/b.txt")\n' +
+      'root.Remove("sub/b.txt")\n\n' +
+      '_, err = root.Stat("sub/b.txt")\n' +
+      'fmt.Println(err != nil)\n\n' +
+      '// sandbox\n' +
+      '// Hello, Root!\n' +
+      '// true\n' +
+      '// 12\n' +
+      '// true',
+    specification: 'https://pkg.go.dev/os#Root',
   },
 ];

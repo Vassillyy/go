@@ -4,7 +4,7 @@ import svgr from 'vite-plugin-svgr';
 import path from 'path';
 
 export default defineConfig({
-  base: '/guru-Frontend/',
+  base: '/guru-guide/',
   plugins: [
     react(),
     svgr({

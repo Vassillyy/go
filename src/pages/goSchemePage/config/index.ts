@@ -6,7 +6,7 @@ export interface ISchemeChild {
 export interface ISchemeCategory {
   id: string;
   label: string;
-  childRoute?: 'topic' | 'package';
+  childRoute?: 'topic' | 'package' | 'table';
   children: ISchemeChild[];
 }
 
@@ -16,112 +16,6 @@ export interface ISchemeConfig {
 
 export const schemeConfig: ISchemeConfig = {
   categories: [
-    {
-      id: 'basics',
-      label: 'Основы',
-      children: [
-        { id: 'hello-world', label: 'Hello World' },
-        { id: 'variables', label: 'Переменные и константы' },
-        { id: 'data-types', label: 'Типы данных' },
-        { id: 'zero-values', label: 'Zero values' },
-        { id: 'type-conversion', label: 'Type conversion' },
-      ],
-    },
-    // {
-    //   id: 'control-flow',
-    //   label: 'Управляющие конструкции',
-    //   children: [
-    //     { id: 'if-else', label: 'if / else' },
-    //     { id: 'switch', label: 'switch' },
-    //     { id: 'for', label: 'for' },
-    //     { id: 'break-continue', label: 'break / continue' },
-    //   ],
-    // },
-    // {
-    //   id: 'functions',
-    //   label: 'Функции',
-    //   children: [
-    //     { id: 'multiple-return', label: 'Множественные возвращаемые значения' },
-    //     { id: 'variadic', label: 'Вариативные функции' },
-    //     { id: 'closures', label: 'Замыкания' },
-    //     { id: 'anonymous-functions', label: 'Анонимные функции' },
-    //   ],
-    // },
-    // {
-    //   id: 'pointers-structs',
-    //   label: 'Указатели и структуры',
-    //   children: [
-    //     { id: 'pointers', label: 'Указатели' },
-    //     { id: 'value-pointer-receivers', label: 'Value / Pointer receivers' },
-    //     { id: 'structs', label: 'Структуры' },
-    //     { id: 'struct-tags', label: 'Struct tags' },
-    //   ],
-    // },
-    // {
-    //   id: 'interfaces-generics',
-    //   label: 'Интерфейсы и дженерики',
-    //   children: [
-    //     { id: 'interfaces', label: 'Интерфейсы' },
-    //     { id: 'empty-interface', label: 'Пустой интерфейс' },
-    //     { id: 'generics', label: 'Generics' },
-    //     { id: 'type-constraints', label: 'Type constraints' },
-    //   ],
-    // },
-    // {
-    //   id: 'collections',
-    //   label: 'Массивы, срезы и map',
-    //   children: [
-    //     { id: 'arrays', label: 'Arrays' },
-    //     { id: 'slices', label: 'Slices' },
-    //     { id: 'maps', label: 'Maps' },
-    //     { id: 'iterating-maps', label: 'Iterating maps' },
-    //   ],
-    // },
-    // {
-    //   id: 'errors',
-    //   label: 'Обработка ошибок',
-    //   children: [
-    //     { id: 'error-interface', label: 'error interface' },
-    //     { id: 'errors-new-fmt-errorf', label: 'errors.New / fmt.Errorf' },
-    //     { id: 'sentinel-errors', label: 'Sentinel errors' },
-    //     { id: 'panic-recover', label: 'panic / recover' },
-    //     { id: 'wrapping-errors', label: 'Wrapping errors' },
-    //   ],
-    // },
-    // {
-    //   id: 'concurrency',
-    //   label: 'Конкурентность',
-    //   children: [
-    //     { id: 'goroutines', label: 'Goroutines' },
-    //     { id: 'channels', label: 'Channels' },
-    //     { id: 'select', label: 'select' },
-    //     { id: 'sync-package', label: 'sync (Mutex, WaitGroup)' },
-    //     { id: 'race-detector', label: 'Race detector' },
-    //     { id: 'worker-pools', label: 'Worker pools' },
-    //   ],
-    // },
-    // {
-    //   id: 'tooling',
-    //   label: 'Инструменты',
-    //   children: [
-    //     { id: 'go-build-run-test', label: 'go build / run / test' },
-    //     { id: 'go-mod', label: 'go mod' },
-    //     { id: 'golangci-lint', label: 'golangci-lint' },
-    //     { id: 'pprof-trace', label: 'pprof / trace' },
-    //     { id: 'cross-compilation', label: 'Cross-compilation' },
-    //   ],
-    // },
-    // {
-    //   id: 'web',
-    //   label: 'Веб-разработка',
-    //   children: [
-    //     { id: 'net-http', label: 'net/http' },
-    //     { id: 'web-frameworks', label: 'gin / echo / fiber' },
-    //     { id: 'grpc', label: 'gRPC' },
-    //     { id: 'middleware', label: 'Middleware' },
-    //     { id: 'rest-api', label: 'REST API' },
-    //   ],
-    // },
     {
       id: 'builtin-packages',
       label: 'Встроенные пакеты',
@@ -135,6 +29,35 @@ export const schemeConfig: ISchemeConfig = {
         { id: 'pkg-bufio', label: 'bufio' },
         { id: 'pkg-time', label: 'time' },
         { id: 'pkg-sort', label: 'sort' },
+      ],
+    },
+    {
+      id: 'pkg-builtin',
+      label: 'Встроенные функции',
+      childRoute: 'package',
+      children: [],
+    },
+    {
+      id: 'tables',
+      label: 'Справочники',
+      childRoute: 'table',
+      children: [
+        { id: 'verbs', label: 'Verbs плейсхолдеры' },
+        { id: 'types', label: 'Типы данных' },
+        { id: 'variables', label: 'Переменные и константы' },
+        { id: 'operators', label: 'Операторы' },
+      ],
+    },
+    {
+      id: 'composite-types',
+      label: 'Составные типы',
+      children: [
+        { id: 'array', label: 'Массив' },
+        { id: 'slice', label: 'Слайс' },
+        { id: 'map', label: 'Мапа' },
+        { id: 'struct', label: 'Структура' },
+        { id: 'pointer', label: 'Указатель' },
+        { id: 'interface', label: 'Интерфейс' },
       ],
     },
   ],

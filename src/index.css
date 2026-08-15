@@ -68,6 +68,25 @@
   --font-switcher-option: var(--font-weight-500) var(--font-size-14)
     var(--font-family);
 
+  /* Table */
+  --color-table-header-bg: #edf9ed;
+  --color-table-header-text: #1a5f1a;
+  --color-table-row-bg-even: #f8fdf8;
+  --color-table-row-bg-checked: #e0e0e0;
+  --color-table-border: #e8f5e9;
+  --color-table-cell-text: #2c3e50;
+  --color-table-checkbox-border: #a5d6a7;
+  --color-table-checkbox-border-hover: #2e7d32;
+  --color-table-checkbox-checked-bg: #2ecc71;
+  --color-table-subtitle-bg: #c8f2d0;
+  --color-table-subtitle-text: #1a5f1a;
+  --font-table-subtitle: var(--font-weight-700) var(--font-size-16)
+    var(--font-family);
+  --font-table-header: var(--font-weight-600) var(--font-size-13)
+    var(--font-family);
+  --font-table-cell: var(--font-weight-400) var(--font-size-14) / 1.5
+    var(--font-family);
+
   /* CodeWS */
   --color-code-ws-bg: #1e1e1e;
   --color-code-ws-title-bg: #252526;

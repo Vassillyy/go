@@ -12,7 +12,11 @@ export const SchemeNode: FC<NodeProps<SchemeFlowNode>> = ({ data }) => {
   const isCategory = data.kind === 'category';
 
   return (
-    <div className={`${styles.node} ${kindClass[data.kind]}`}>
+    <div
+      className={`${styles.node} ${kindClass[data.kind]} ${
+        isCategory && data.clickable ? styles.categoryClickable : ''
+      }`}
+    >
       {isCategory ? (
         <>
           <Handle

@@ -27,16 +27,22 @@ export const GoPackagePage: FC = () => {
     loadMore,
   } = useFilters<MethodKind>();
 
-  const activeKind = activeCategories[0] ?? 'function';
+  const packageMethods = useMemo(
+    () => packageConfigs[packageId] ?? [],
+    [packageId],
+  );
+  const hasTypes = packageMethods.some((method) => method.kind === 'type');
+
+  const activeKind = hasTypes ? (activeCategories[0] ?? 'function') : 'function';
 
   const filteredMethods = useMemo(
     () =>
-      (packageConfigs[packageId] ?? []).filter(
+      packageMethods.filter(
         (method) =>
           (method.kind ?? 'function') === activeKind &&
           method.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
-    [packageId, searchQuery, activeKind],
+    [packageMethods, searchQuery, activeKind],
   );
 
   const itemsToShow = filteredMethods.slice(0, loadedCount);
@@ -62,11 +68,13 @@ export const GoPackagePage: FC = () => {
               onSearchChange={searchChange}
               onSearchReset={searchReset}
             />
-            <Switcher
-              options={KIND_OPTIONS}
-              value={activeKind}
-              onChange={(kind) => filterChange([kind])}
-            />
+            {hasTypes && (
+              <Switcher
+                options={KIND_OPTIONS}
+                value={activeKind}
+                onChange={(kind) => filterChange([kind])}
+              />
+            )}
           </div>
         </header>
 

@@ -32,12 +32,18 @@ export const buildScheme = (scheme: ISchemeConfig): IBuildSchemeResult => {
     const categoryId = `category-${category.id}`;
 
     const route = category.childRoute ?? 'topic';
+    const isLeafCategory = category.children.length === 0;
 
     nodes.push({
       id: categoryId,
       type: 'schemeNode',
       position: { x: CATEGORY_X, y: rowY },
-      data: { label: category.label, kind: 'category', route },
+      data: {
+        label: category.label,
+        kind: 'category',
+        route,
+        clickable: isLeafCategory,
+      },
       draggable: false,
       selectable: false,
     });

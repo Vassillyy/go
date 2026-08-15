@@ -767,7 +767,11 @@ export const fmt: IMethod[] = [
     syntax:
       'type State interface {\n\tWrite(b []byte) (n int, err error)\n\tWidth() (wid int, ok bool)\n\tPrecision() (prec int, ok bool)\n\tFlag(c int) bool\n}',
     description:
-      "State передаётся в Format методом Formatter и даёт доступ к параметрам форматирования: Write пишет отформатированный вывод, Width и Precision возвращают заданные ширину и точность (и признак, что они указаны), а Flag проверяет, установлен ли флаг форматирования (например, int('+') или int('-')).",
+      'State передаётся в Format методом Formatter и даёт доступ к параметрам форматирования:\n' +
+      'Write пишет отформатированный вывод.\n' +
+      'Width возвращает заданную ширину поля и признак, что она указана.\n' +
+      'Precision возвращает заданную точность и признак, что она указана.\n' +
+      "Flag проверяет, установлен ли флаг форматирования (например, int('+') или int('-')).",
     example:
       'type Marker int\n\n' +
       'func (m Marker) Format(f fmt.State, verb rune) {\n' +
@@ -813,9 +817,14 @@ export const fmt: IMethod[] = [
     name: 'ScanState',
     kind: 'type',
     syntax:
-      'type ScanState interface {\n\tReadRune() (r rune, size int, err error)\n\tUnreadRune() error\n\tSkipSpace()\n\tToken(skipSpace bool, f func(rune) bool) (token []byte, err error)\n\tWidth() (wid int, ok bool)\n\tRead(buf []byte) (n int, err error)\n}',
+      'type ScanState interface {\n\tReadRune() (r rune, size int, err error)\n\tUnreadRune() error\n\tSkipSpace()\n\tToken(skipSpace bool, f func(rune) bool) (token []byte, err error)\n\tWidth() (wid int, ok bool)\n}',
     description:
-      'ScanState передаётся в Scan методом Scanner и даёт доступ к вводу: ReadRune и UnreadRune читают один символ с возможностью вернуть его обратно, SkipSpace пропускает пробелы, Token считывает подряд идущие символы, удовлетворяющие предикату f, а Width сообщает заданную ширину поля (и признак, что она указана). Read тоже есть в интерфейсе, но сама fmt его не вызывает и не рассчитана на вызов из Scan — она нужна только для реализации обёрток вокруг ScanState; при вызове из Scan вернёт ошибку.',
+      'ScanState передаётся в Scan методом Scanner и даёт доступ к вводу:\n' +
+      'ReadRune читает один символ, сдвигая позицию.\n' +
+      'UnreadRune возвращает последний прочитанный символ обратно.\n' +
+      'SkipSpace пропускает пробельные символы.\n' +
+      'Token считывает подряд идущие символы, удовлетворяющие предикату f.\n' +
+      'Width сообщает заданную ширину поля и признак, что она указана.',
     example:
       'type Word string\n\n' +
       'func (w *Word) Scan(state fmt.ScanState, verb rune) error {\n' +

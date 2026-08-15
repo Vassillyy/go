@@ -30,12 +30,21 @@ export const GoSchemePage: FC = () => {
     [edges, hoveredNodeId],
   );
 
-  const handleNodeClick = (_: unknown, node: SchemeFlowNode) => {
-    if (node.data.kind !== 'child') return;
+  const isClickableNode = (node: SchemeFlowNode) =>
+    node.data.kind === 'child' ||
+    (node.data.kind === 'category' && node.data.clickable);
 
-    const childId = node.id.replace(/^child-/, '');
-    const basePath =
-      node.data.route === 'package' ? '/go-scheme/package' : '/go-scheme/topic';
+  const handleNodeClick = (_: unknown, node: SchemeFlowNode) => {
+    if (!isClickableNode(node)) return;
+
+    const idPrefix = node.data.kind === 'child' ? /^child-/ : /^category-/;
+    const childId = node.id.replace(idPrefix, '');
+    const basePathByRoute: Record<typeof node.data.route, string> = {
+      package: '/go-scheme/package',
+      table: '/go-scheme/table',
+      topic: '/go-scheme/topic',
+    };
+    const basePath = basePathByRoute[node.data.route];
 
     navigate(`${basePath}/${childId}`, {
       state: { label: node.data.label },
@@ -43,7 +52,7 @@ export const GoSchemePage: FC = () => {
   };
 
   const handleNodeMouseEnter = (_: unknown, node: SchemeFlowNode) => {
-    if (node.data.kind !== 'child') return;
+    if (!isClickableNode(node)) return;
     setHoveredNodeId(node.id);
   };
 

@@ -7,6 +7,7 @@ import { io } from './io.ts';
 import { bufio } from './bufio.ts';
 import { time } from './time.ts';
 import { sort } from './sort.ts';
+import { builtin } from './builtin.ts';
 
 export const packageConfigs: Record<string, IMethod[]> = {
   'pkg-fmt': fmt,
@@ -17,4 +18,5 @@ export const packageConfigs: Record<string, IMethod[]> = {
   'pkg-bufio': bufio,
   'pkg-time': time,
   'pkg-sort': sort,
+  'pkg-builtin': builtin,
 };

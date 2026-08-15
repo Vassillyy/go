@@ -1,0 +1,251 @@
+.page {
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 40px 20px;
+  background: #f8fff9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.back {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-bottom: 24px;
+  margin-left: max(20px, calc(50% - 750px));
+  color: #2e7d32;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.container {
+  width: 100%;
+  max-width: 1500px;
+  flex: 0 1 auto;
+  min-height: 0;
+  background: #ffffff;
+  border: 1px solid #e8f5e9;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  flex-shrink: 0;
+  margin: 0 0 20px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.tableWrapper {
+  width: 100%;
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: left;
+  padding: 10px 14px;
+  font: var(--font-table-header);
+  color: var(--color-table-header-text);
+  background: var(--color-table-header-bg);
+  border-bottom: 2px solid var(--color-table-border);
+  white-space: nowrap;
+}
+
+.tr:nth-child(even) {
+  background: var(--color-table-row-bg-even);
+}
+
+.trChecked,
+.trChecked:nth-child(even) {
+  background: var(--color-table-row-bg-checked);
+}
+
+.subtitleRow,
+.subtitleRow:nth-child(even) {
+  background: var(--color-table-subtitle-bg);
+}
+
+.subtitleCell {
+  padding: 10px 14px;
+  font: var(--font-table-subtitle);
+  color: var(--color-table-subtitle-text);
+  border-bottom: 1px solid var(--color-table-border);
+}
+
+.checkboxCell {
+  width: 1%;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-table-border);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.checkbox {
+  appearance: none;
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--color-table-checkbox-border);
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  flex: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.checkbox:hover {
+  border-color: var(--color-table-checkbox-border-hover);
+}
+
+.checkbox:checked {
+  background: var(--color-table-checkbox-checked-bg);
+  border-color: var(--color-table-checkbox-checked-bg);
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.td {
+  padding: 10px 14px;
+  font: var(--font-table-cell);
+  color: var(--color-table-cell-text);
+  border-bottom: 1px solid var(--color-table-border);
+  vertical-align: middle;
+  white-space: pre-wrap;
+}
+
+.noResult {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #808080;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .back {
+    margin-left: 0;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .table {
+    display: block;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .tr,
+  .tr:nth-child(even) {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid var(--color-table-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .trChecked,
+  .trChecked:nth-child(even) {
+    background: var(--color-table-row-bg-checked);
+  }
+
+  .checkboxCell {
+    order: -1;
+    align-self: flex-end;
+    width: auto;
+    padding: 0 0 6px;
+    border-bottom: none;
+  }
+
+  .td {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--color-table-border);
+    font-size: 15px;
+  }
+
+  .td:last-child {
+    border-bottom: none;
+  }
+
+  .td::before {
+    content: attr(data-label);
+    display: block;
+    font: var(--font-table-header);
+    color: var(--color-table-header-text);
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .subtitleRow,
+  .subtitleRow:nth-child(even) {
+    grid-column: 1 / -1;
+    background: var(--color-table-subtitle-bg);
+    border-radius: 8px;
+  }
+
+  .subtitleCell {
+    border: none;
+    padding: 8px 12px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table tbody {
+    grid-template-columns: 1fr;
+  }
+}

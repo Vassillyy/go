@@ -30,7 +30,6 @@ export const useDragToScroll = () => {
     drag.current.startY = event.clientY;
     drag.current.scrollLeft = event.currentTarget.scrollLeft;
     drag.current.scrollTop = event.currentTarget.scrollTop;
-    event.currentTarget.setPointerCapture(event.pointerId);
   }, []);
 
   const onPointerMove = useCallback((event: PointerEvent<HTMLDivElement>) => {
@@ -40,8 +39,10 @@ export const useDragToScroll = () => {
     const dx = event.clientX - state.startX;
     const dy = event.clientY - state.startY;
 
-    if (!state.moved && Math.hypot(dx, dy) > DRAG_THRESHOLD) {
+    if (!state.moved) {
+      if (Math.hypot(dx, dy) <= DRAG_THRESHOLD) return;
       state.moved = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
     }
 
     event.currentTarget.scrollLeft = state.scrollLeft - dx;

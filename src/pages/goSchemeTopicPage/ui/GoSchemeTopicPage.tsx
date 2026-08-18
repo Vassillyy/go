@@ -1,9 +1,16 @@
 import type { FC } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { AppPaths } from '@/shared/constants/route';
+import { useFormattedText } from '@/shared/hooks';
 import { CodeWS } from '@/shared/ui';
 import { topicConfigs } from '../config';
 import styles from './GoSchemeTopicPage.module.css';
+
+const SectionParagraph: FC<{ text: string }> = ({ text }) => {
+  const parts = useFormattedText(text);
+
+  return <p className={styles.sectionBody}>{parts}</p>;
+};
 
 export const GoSchemeTopicPage: FC = () => {
   const { topicId = '' } = useParams();
@@ -27,9 +34,7 @@ export const GoSchemeTopicPage: FC = () => {
               <section key={index} className={styles.section}>
                 <h2 className={styles.sectionHeading}>{section.heading}</h2>
                 {section.body.split('\n\n').map((paragraph, pIndex) => (
-                  <p key={pIndex} className={styles.sectionBody}>
-                    {paragraph}
-                  </p>
+                  <SectionParagraph key={pIndex} text={paragraph} />
                 ))}
                 {section.examples?.map((example, eIndex) => (
                   <div key={eIndex} className={styles.example}>

@@ -40,6 +40,7 @@ export const pointerTopic: ITopicConfig = {
         'Присваивание через *p = value меняет исходную переменную, на чей адрес указывает p, а не сам указатель.',
       examples: [
         {
+          caption: '*p меняет исходную переменную',
           code: 'x := 1\n' + 'p := &x\n' + '*p = 99\n' + 'fmt.Println(x)\n\n' + '// 99',
         },
       ],
@@ -50,6 +51,7 @@ export const pointerTopic: ITopicConfig = {
         'Разыменование nil-указателя вызывает панику во время выполнения — компилятор эту ошибку не ловит, она проявляется только в рантайме.',
       examples: [
         {
+          caption: 'Разыменование nil вызывает панику',
           code:
             'var p *int\n' +
             'fmt.Println(*p)\n\n' +
@@ -89,6 +91,7 @@ export const pointerTopic: ITopicConfig = {
         'Так же работают и методы: указатель на структуру напрямую вызывает методы и с получателем-значением, и с получателем-указателем.',
       examples: [
         {
+          caption: 'Go сам разыменовывает указатель при обращении к полю',
           code:
             'type Point struct{ X, Y int }\n\n' +
             'p := &Point{X: 1, Y: 2}\n' +
@@ -105,6 +108,7 @@ export const pointerTopic: ITopicConfig = {
         'Указатели на две разные переменные с одинаковым значением не равны.',
       examples: [
         {
+          caption: 'Сравниваются адреса, а не значения',
           code:
             'a, b := 1, 1\n' +
             'p1, p2 := &a, &b\n' +
@@ -120,6 +124,7 @@ export const pointerTopic: ITopicConfig = {
         'Это одна из гарантий безопасности памяти в языке; обойти её можно только явно, через пакет unsafe, и это уже выход за пределы обычных гарантий типобезопасности.',
       examples: [
         {
+          caption: 'Арифметика указателей запрещена компилятором',
           code: 'x := 1\n' + 'p := &x\n' + 'p++\n\n' + '// invalid operation: p++ (non-numeric type *int)',
         },
       ],

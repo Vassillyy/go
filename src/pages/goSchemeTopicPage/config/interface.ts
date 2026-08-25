@@ -8,6 +8,7 @@ export const interfaceTopic: ITopicConfig = {
         'Любой тип, у которого есть все перечисленные в интерфейсе методы с такими же сигнатурами, автоматически удовлетворяет этому интерфейсу.',
       examples: [
         {
+          caption: 'Circle реализует интерфейс методом Area()',
           code:
             'type Shape interface {\n' +
             '  Area() float64\n' +
@@ -28,6 +29,7 @@ export const interfaceTopic: ITopicConfig = {
         'Соответствие типа интерфейсу можно проверить сразу на этапе компиляции идиомой var _ Interface = Type{} — если метод отсутствует, ошибка появится тут же, а не в месте реального использования.',
       examples: [
         {
+          caption: 'Проверка соответствия на этапе компиляции',
           code:
             'type Stringer interface {\n' +
             '  String() string\n' +
@@ -45,6 +47,7 @@ export const interfaceTopic: ITopicConfig = {
         'За универсальность приходится расплачиваться потерей информации о конкретном типе на этапе компиляции — её приходится доставать обратно через утверждение типа.',
       examples: [
         {
+          caption: 'any хранит значения любых типов',
           code:
             'items := []any{1, "two", 3.0, true}\n' +
             'fmt.Println(items)\n\n' +
@@ -58,6 +61,7 @@ export const interfaceTopic: ITopicConfig = {
         'Пока в интерфейс не присвоено ничего, обе части пары пусты, и интерфейс равен nil; как только присвоено конкретное значение, интерфейс хранит и его тип, и его данные.',
       examples: [
         {
+          caption: 'Пустой интерфейс — nil; с присвоением хранит тип и значение',
           code:
             'var v any\n' +
             'empty := v == nil\n' +
@@ -77,6 +81,7 @@ export const interfaceTopic: ITopicConfig = {
         'Эта ловушка регулярно ломает код, где error возвращается как интерфейс, а фактическое значение — как nil-указатель на конкретный тип ошибки.',
       examples: [
         {
+          caption: 'nil-указатель в интерфейсе ≠ nil-интерфейс',
           code:
             'type MyError struct{}\n\n' +
             'func (e *MyError) Error() string { return "boom" }\n\n' +
@@ -97,6 +102,7 @@ export const interfaceTopic: ITopicConfig = {
         'Однопеременная форма паникует, если динамический тип x не совпадает с T; форма v, ok := x.(T) вместо паники возвращает ok == false и нулевое значение вместо v — это безопасный способ проверить и достать значение конкретного типа.',
       examples: [
         {
+          caption: 'Безопасная форма v, ok := x.(T)',
           code:
             'var v any = "hello"\n\n' +
             's, ok := v.(string)\n' +
@@ -113,6 +119,7 @@ export const interfaceTopic: ITopicConfig = {
       body: 'switch со специальной формой x := x.(type) сравнивает динамический тип x поочерёдно с типами в case, и в теле подходящей ветки x уже имеет этот конкретный тип — удобный способ разобрать значение произвольного интерфейсного типа на несколько известных вариантов сразу.',
       examples: [
         {
+          caption: 'Разбор типа через switch x := v.(type)',
           code:
             'func describe(v any) string {\n' +
             '  switch x := v.(type) {\n' +
@@ -139,6 +146,7 @@ export const interfaceTopic: ITopicConfig = {
         'Так в стандартной библиотеке io.ReadWriter собран из io.Reader и io.Writer: ему удовлетворяет только тип, у которого есть оба метода, Read и Write.',
       examples: [
         {
+          caption: 'ReadWriter требует оба метода — Read и Write',
           code:
             'type Reader interface{ Read() string }\n' +
             'type Writer interface{ Write(s string) }\n\n' +

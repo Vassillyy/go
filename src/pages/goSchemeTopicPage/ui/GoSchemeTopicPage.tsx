@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { AppPaths } from '@/shared/constants/route';
 import { useFormattedText } from '@/shared/hooks';
@@ -16,6 +16,15 @@ export const GoSchemeTopicPage: FC = () => {
   const { topicId = '' } = useParams();
   const location = useLocation();
   const { label } = location.state;
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const topic = topicConfigs[topicId];
 
@@ -56,6 +65,28 @@ export const GoSchemeTopicPage: FC = () => {
           </p>
         </div>
       )}
+
+      <button
+        type="button"
+        className={`${styles.scrollTop} ${showScrollTop ? styles.scrollTopVisible : ''}`}
+        onClick={scrollToTop}
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 10L8 6L12 10"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   );
 };

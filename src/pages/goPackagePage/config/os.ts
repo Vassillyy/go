@@ -12,10 +12,13 @@ export const os: IMethod[] = [
     ],
     description:
       'Args содержит аргументы командной строки, с которыми была запущена программа. Args[0] — путь к исполняемому файлу, Args[1:] — остальные переданные аргументы.',
-    example:
-      'fmt.Println(os.Args)\n\n' +
+    example: 'fmt.Println("Все аргументы:", os.Args)\n' +
+      'fmt.Println("Имя программы (os.Args[0]):", os.Args[0])\n' +
+      'fmt.Println("Аргументы программы (os.Args[1:]):", os.Args[1:])\n\n' +
       '// если запустить: go run main.go hello world\n' +
-      '// [/tmp/go-build123/main hello world]',
+      '// Все аргументы: [/tmp/go-build123/main hello world]\n' +
+      '// Имя программы (os.Args[0]): /tmp/go-build123/main\n' +
+      '// Аргументы программы (os.Args[1:]): [hello world]',
     specification: 'https://pkg.go.dev/os#Args',
   },
   {
@@ -42,6 +45,33 @@ export const os: IMethod[] = [
       'fmt.Printf("%q %q\\n", v1, v2)\n\n' +
       '// "production" ""',
     specification: 'https://pkg.go.dev/os#Getenv',
+  },
+  {
+    name: 'Setenv',
+    syntax: 'func Setenv(key, value string) error',
+    parameters: [
+      {
+        name: 'key',
+        description: 'Имя переменной окружения',
+      },
+      {
+        name: 'value',
+        description: 'Значение, которое нужно установить',
+      },
+    ],
+    returns: [
+      {
+        name: 'error',
+        description: 'Ошибка, если имя переменной некорректно, обычно nil',
+      },
+    ],
+    description:
+      'Setenv устанавливает value для key. Изменение действует в рамках текущего процесса и его дочерних процессов, запущенных после вызова.',
+    example:
+      'err := os.Setenv("APP_ENV", "production")\n' +
+      'fmt.Println(os.Getenv("APP_ENV"), err)\n\n' +
+      '// production <nil>',
+    specification: 'https://pkg.go.dev/os#Setenv',
   },
   {
     name: 'LookupEnv',
@@ -75,33 +105,6 @@ export const os: IMethod[] = [
     specification: 'https://pkg.go.dev/os#LookupEnv',
   },
   {
-    name: 'Setenv',
-    syntax: 'func Setenv(key, value string) error',
-    parameters: [
-      {
-        name: 'key',
-        description: 'Имя переменной окружения',
-      },
-      {
-        name: 'value',
-        description: 'Значение, которое нужно установить',
-      },
-    ],
-    returns: [
-      {
-        name: 'error',
-        description: 'Ошибка, если имя переменной некорректно, обычно nil',
-      },
-    ],
-    description:
-      'Setenv устанавливает значение value для key. Изменение действует в рамках текущего процесса и его дочерних процессов, запущенных после вызова.',
-    example:
-      'err := os.Setenv("APP_ENV", "production")\n' +
-      'fmt.Println(os.Getenv("APP_ENV"), err)\n\n' +
-      '// production <nil>',
-    specification: 'https://pkg.go.dev/os#Setenv',
-  },
-  {
     name: 'Unsetenv',
     syntax: 'func Unsetenv(key string) error',
     parameters: [
@@ -132,11 +135,11 @@ export const os: IMethod[] = [
     parameters: [
       {
         name: 'code',
-        description: 'Код завершения процесса; 0 обычно означает успех',
+        description: 'Код завершения процесса (0 обычно означает успех)',
       },
     ],
     description:
-      'Exit немедленно завершает текущую программу с code. В отличие от обычного return из main, отложенные вызовы defer не выполняются.',
+      'Exit немедленно завершает текущую программу с code. В отличие от обычного return, отложенные вызовы defer не выполняются.',
     example:
       'fmt.Println("before exit")\n' +
       'os.Exit(1)\n' +
@@ -165,7 +168,7 @@ export const os: IMethod[] = [
       },
     ],
     description:
-      'Open открывает файл по name и возвращает *File для дальнейшей работы с ним. Файл нужно закрыть вызовом Close.',
+      'Open открывает файл по name и возвращает *File. Файл нужно закрыть вызовом Close.',
     example:
       'f, err := os.Open("config.txt")\n' +
       'if err != nil {\n' +
@@ -198,11 +201,7 @@ export const os: IMethod[] = [
     description:
       'Create создаёт файл по name (или обрезает существующий до нулевой длины) и открывает его для чтения и записи. В правах доступа Unix три цифры — для владельца файла, его группы и всех остальных пользователей; 0666 даёт чтение и запись всем троим. umask (системная маска, обычно 022) забирает часть этих прав у группы и остальных, поэтому реально файл чаще создаётся с правами 0644 (запись остаётся только у владельца).',
     example:
-      'f, err := os.Create("output.txt")\n' +
-      'if err != nil {\n' +
-      '  fmt.Println(err)\n' +
-      '  return\n' +
-      '}\n' +
+      'f, _ := os.Create("output.txt")\n' +
       'f.WriteString("Hello, Roman!")\n' +
       'f.Close()\n\n' +
       'data, _ := os.ReadFile("output.txt")\n' +

@@ -2,29 +2,86 @@
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
-  padding: 40px 20px;
   background: #f8fff9;
   display: flex;
-  flex-direction: column;
+  align-items: stretch;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 260px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-right: 1px solid #e8f5e9;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
   align-items: center;
+  padding: 14px 24px;
+  background: rgba(248, 255, 249, 0.95);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #e8f5e9;
 }
 
 .back {
-  align-self: flex-start;
-  margin-bottom: 24px;
-  margin-left: max(20px, calc(50% - 550px));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
   color: #2e7d32;
   font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
+  background: #ffffff;
+  border: 1px solid #c8e6c9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background 0.2s ease;
 }
 
 .back:hover {
-  text-decoration: underline;
+  background: #e8f5e9;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navLink {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #2c3e50;
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navLink:hover {
+  background: #e8f5e9;
+  color: #1a5f1a;
 }
 
 .card {
   width: 100%;
   max-width: 680px;
+  margin: 24px auto 48px;
   background: #ffffff;
   border: 1px solid #e8f5e9;
   border-radius: 14px;
@@ -48,8 +105,8 @@
 }
 
 .container {
-  width: 100%;
-  max-width: 1100px;
+  max-width: 1000px;
+  margin: 24px auto 48px;
   background: #ffffff;
   border: 1px solid #e8f5e9;
   border-radius: 14px;
@@ -69,6 +126,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  scroll-margin-top: 84px;
 }
 
 .sectionHeading {
@@ -101,43 +159,22 @@
   font-style: italic;
 }
 
-.scrollTop {
-  position: fixed;
-  right: max(28px, calc(50% - 545px));
-  top: 50%;
-  transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid #e8f5e9;
-  background: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
 
-.scrollTopVisible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.scrollTop:hover {
-  background: #e8f5e9;
+  .container {
+    padding: 24px;
+  }
 }
 
 @media (max-width: 768px) {
-  .back {
-    margin-left: 0;
+  .header {
+    padding: 12px 16px;
   }
 
-  .card,
-  .container {
+  .card {
     padding: 24px;
   }
 

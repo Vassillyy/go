@@ -58,6 +58,7 @@ export const schemeConfig: ISchemeConfig = {
         { id: 'struct', label: 'Структура' },
         { id: 'pointer', label: 'Указатель' },
         { id: 'interface', label: 'Интерфейс' },
+        { id: 'function', label: 'Функция' },
       ],
     },
   ],

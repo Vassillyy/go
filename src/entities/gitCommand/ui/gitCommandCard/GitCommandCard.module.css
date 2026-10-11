@@ -1,0 +1,201 @@
+.commandCard {
+  border: 2px solid var(--color-git-card-border);
+  border-radius: 8px;
+  padding: 6px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 15px;
+}
+
+.commandCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-git-card-hover);
+}
+
+.commandInfo {
+  flex-shrink: 0;
+  width: 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.commandHeader {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonArrow {
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.buttonArrow svg {
+  height: 100%;
+  width: 100%;
+  color: var(--color-git-card-button-arrow);
+}
+
+.commandName {
+  font: var(--font-git-card-name);
+  color: var(--color-git-card-name);
+}
+
+.commandSyntax {
+  width: 100%;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  background: var(--color-git-card-syntax-bg);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font: var(--font-git-card-syntax);
+  color: var(--color-git-card-syntax-text);
+  border-left: 3px solid var(--color-git-card-syntax-border);
+  box-shadow: var(--shadow-git-card-syntax);
+}
+
+.flagsBlock {
+  background: var(--color-git-card-flags-block-bg);
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid var(--color-git-card-flags-block-border);
+}
+
+.flagsTitle {
+  font: var(--font-git-card-flags-title);
+  color: var(--color-git-card-flags-title);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.flagsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flagItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--color-git-card-flag-item-border);
+}
+
+.flagItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.flagName {
+  width: 100%;
+  font: var(--font-git-card-flag-name);
+  color: var(--color-git-card-flag-name-text);
+  background: var(--color-git-card-flag-name-bg);
+  padding: 3px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.flagDescription {
+  font: var(--font-git-card-flag-description);
+  color: var(--color-git-card-flag-description-text);
+  flex: 1;
+  padding: 4px 0;
+  white-space: pre-line;
+}
+
+.commandDescription {
+  color: var(--color-git-card-description-text);
+  font: var(--font-git-card-description);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--color-git-card-flags-block-bg);
+  border: 1px solid var(--color-git-card-flags-block-border);
+}
+
+.sectionHeading {
+  margin: 0;
+  font: var(--font-git-card-flags-title);
+  color: var(--color-git-card-flags-title);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sectionBody {
+  margin: 0;
+  color: var(--color-git-card-description-text);
+  font: var(--font-git-card-description);
+}
+
+.keysBlock {
+  border-top: 1px solid var(--color-git-card-flag-item-border);
+  padding-top: 8px;
+}
+
+.specLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-git-card-link-text);
+  text-decoration: none;
+  font: var(--font-git-card-link);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--color-git-card-link-border);
+  width: fit-content;
+  transition: all 0.2s;
+}
+
+.specLink:hover {
+  background: var(--color-git-card-link-bg-hover);
+  color: var(--color-git-card-link-text-hover);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-git-card-link);
+}
+
+@media (max-width: 768px) {
+  .commandCard {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .commandInfo {
+    width: 100%;
+    flex-shrink: 1;
+  }
+
+  .flagItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .commandCard {
+    padding: 4px;
+  }
+
+  .commandSyntax {
+    word-break: break-all;
+  }
+}

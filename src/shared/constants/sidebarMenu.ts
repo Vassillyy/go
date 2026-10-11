@@ -12,4 +12,8 @@ export const sidebarMenu: ISidebarItem[] = [
     path: AppPaths.GO_SCHEME,
     label: 'Go',
   },
+  {
+    path: AppPaths.GIT,
+    label: 'Git',
+  },
 ];

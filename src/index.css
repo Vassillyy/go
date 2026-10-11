@@ -154,6 +154,43 @@
     var(--font-family);
   --shadow-method-card-syntax: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-method-card-link: 0 2px 4px rgba(77, 171, 247, 0.2);
+
+  /* GitCommandCard */
+  --color-git-card-border: #e9ecef;
+  --color-git-card-button-arrow: #c92a2a;
+  --color-git-card-name: #c92a2a;
+  --color-git-card-syntax-bg: #f8f9fa;
+  --color-git-card-syntax-text: #e8590c;
+  --color-git-card-syntax-border: #ff8787;
+  --color-git-card-flags-block-bg: #f8f9fa;
+  --color-git-card-flags-block-border: #dee2e6;
+  --color-git-card-flags-title: #495057;
+  --color-git-card-flag-item-border: #e9ecef;
+  --color-git-card-flag-name-text: #c92a2a;
+  --color-git-card-flag-name-bg: #fff5f5;
+  --color-git-card-flag-description-text: #495057;
+  --color-git-card-description-text: #495057;
+  --color-git-card-link-text: #c92a2a;
+  --color-git-card-link-border: #ffa8a8;
+  --color-git-card-link-bg-hover: #fff5f5;
+  --color-git-card-link-text-hover: #a61e1e;
+  --shadow-git-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --font-git-card-name: var(--font-weight-600) var(--font-size-20)
+    var(--font-family-code);
+  --font-git-card-syntax: var(--font-weight-400) var(--font-size-16)
+    var(--font-family-code);
+  --font-git-card-flags-title: var(--font-weight-600) var(--font-size-12)
+    var(--font-family);
+  --font-git-card-flag-name: var(--font-weight-600) var(--font-size-13)
+    var(--font-family-code);
+  --font-git-card-flag-description: var(--font-weight-400) var(--font-size-12) /
+    1.5 var(--font-family);
+  --font-git-card-description: var(--font-weight-400) var(--font-size-14) / 1.6
+    var(--font-family);
+  --font-git-card-link: var(--font-weight-500) var(--font-size-10)
+    var(--font-family);
+  --shadow-git-card-syntax: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-git-card-link: 0 2px 4px rgba(201, 42, 42, 0.2);
 }
 
 @media (max-width: 768px) {

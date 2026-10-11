@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { GoGitPage } from '@/pages/goGitPage';
 import { GoPackagePage } from '@/pages/goPackagePage';
 import { GoSchemePage } from '@/pages/goSchemePage';
 import { GoSchemeTopicPage } from '@/pages/goSchemeTopicPage';
@@ -19,6 +20,10 @@ export const router = createBrowserRouter(
         {
           path: AppPaths.GO_SCHEME,
           element: <GoSchemePage />,
+        },
+        {
+          path: AppPaths.GIT,
+          element: <GoGitPage />,
         },
       ],
     },

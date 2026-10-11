@@ -5,6 +5,7 @@ import { mapTopic } from './map.ts';
 import { structTopic } from './struct.ts';
 import { pointerTopic } from './pointer.ts';
 import { interfaceTopic } from './interface.ts';
+import { functionTopic } from './function.ts';
 
 export type { ITopicConfig, ITopicSection, ITopicExample } from './types.ts';
 
@@ -15,4 +16,5 @@ export const topicConfigs: Record<string, ITopicConfig> = {
   struct: structTopic,
   pointer: pointerTopic,
   interface: interfaceTopic,
+  function: functionTopic,
 };
